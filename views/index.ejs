@@ -1,0 +1,78 @@
+<!-- Wappler include head-page="layouts/main" is="dmx-app" id="index" appConnect="local" jquery_slim_35="local" fontawesome_4="local" bootstrap4="local" components="{dmxBootstrap4Modal:{},dmxSummernote:{},dmxValidator:{},dmxFormatter:{}}" -->
+<dmx-datetime id="datetimepicker" utc="true"></dmx-datetime>
+
+<dmx-serverconnect id="fetch_all_comments" url="/api/get_data/all_comments"></dmx-serverconnect>
+
+<div class="modal" id="add_comment_modal" is="dmx-bs4-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="add_comment" is="dmx-serverconnect-form" method="post" action="/api/post_data/post_new_comment" dmx-on:success="fetch_all_comments.load();add_comment_modal.hide()">
+                    <input id="datetime" name="datetime" type="hidden" class="form-control" dmx-bind:value="datetimepicker.datetime.formatDate('dd/MM/yyyy')">
+
+                    <div class="form-group">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control form-input" id="name" name="name" aria-describedby="input1_help" placeholder="Enter some text" required="">
+                        <small id="input1_help" class="form-text text-muted form-input-info">You can give any random name</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="url" class="form-label">Image Url</label>
+                        <input type="text" class="form-control form-input" id="url" name="url" aria-describedby="input1_help" placeholder="Enter some text" required="" data-rule-url=""
+                            dmx-bind:value="'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg'">
+                        <small id="input1_help1" class="form-text text-muted form-input-info">Please submit a image url from the web</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="url" class="form-label">Image Url</label>
+                        <textarea id="comment" class="form-control form-input" required="" name="comment"></textarea>
+                        <small id="input1_help2" class="form-text text-muted form-input-info">Write your comments</small>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button id="btn2" class="from-btn btn btn-primary" type="submit">Submit</button>
+                        <button id="btn3" class="form-btn btn" type="reset">Clear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="heading-section">
+    <h1 class="heading-primary">PWA Comments</h1>
+    <button id="btn1" class="add-btn btn text-light btn-primary" data-toggle="modal" data-target="#add_comment_modal">Add New Comment&nbsp;&nbsp;<i class="fa fa-plus-circle"></i>&nbsp;</button>
+</section>
+
+<section class="card-section">
+    <div class="container">
+        <div class="row w-100 justify-content-center" is="dmx-repeat" id="repeat1" dmx-bind:repeat="fetch_all_comments.data.get_all_comments" key="id">
+
+            <div class="col-12 col-md-10">
+                <div class="card pl-2 pr-2">
+                    <div class="row justify-content-around w-100">
+                        <div class="col-2 col-md-1">
+                            <img src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="profile" class="card-img card__image img-fluid" dmx-bind:src="image">
+                        </div>
+                        <div class="col card-content">
+                            <h4 class="card-title">{{name}}</h4>
+                            <p class="card-date">{{datetime}}</p>
+                            <p class="paragraph">{{message}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<meta name="ac:route" content="/">
+<!-- New Wappler Page -->

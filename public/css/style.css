@@ -1,0 +1,146 @@
+:root {
+    --color-primary: #ececec;
+    --color-primary-light: #f7f7f7;
+    --color-primary-dark: #dbdbdb;
+}
+
+html {
+    font-size: 70%;
+}
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: inherit;
+            box-sizing: inherit;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #777;
+    min-height: 100vh;
+}
+
+.card {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+
+    background-image: -webkit-gradient(linear,left top, right bottom,from(rgb(#f7f7f7,0.6)),to(rgb(#ececec,0.6)));
+
+    background-image: linear-gradient(to right bottom,rgb(#f7f7f7,0.6),rgb(#ececec,0.6));
+    -webkit-box-shadow: 0 5rem 5rem rgb(#000000,0.8);
+            box-shadow: 0 5rem 5rem rgb(#000000,0.8);
+            padding-left: 3rem;
+            padding-right: 3rem;
+
+            margin-top: 3rem;
+}
+
+.card__image{
+    border-radius: 10rem;
+    width: 5rem;
+    height:5rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.card-content{
+    margin-top: 1rem;
+}
+
+.card-title{
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: .5rem;
+}
+
+.card-date{
+    font-size: 1.2rem;
+    margin-bottom: .5rem;
+    font-weight: 400;
+    color: rgb(194, 194, 194);
+}
+
+.paragraph{
+    font-size: 1.6rem;
+    color: grey;
+    font-weight: 400;
+}
+
+.heading-section{
+    margin-top: 3rem;
+
+    display: -webkit-box;
+
+    display: -ms-flexbox;
+
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.heading-primary{
+    font-size: 2.4rem;
+    color: rgb(27, 27, 27);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.add-btn{
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    margin-top: 3rem;
+}
+
+.form-label{
+    font-size: 1.4rem;
+    color: #000;
+    font-weight: 400;
+}
+
+.form-input{
+    width: calc(100% - 50px);
+}
+
+.form-input-info{
+    font-size: 1rem;
+}
+
+.invalid-feedback{
+    font-size: 1rem;
+}
+
+input{
+    font-size: 1.4rem;
+}
+
+.form-btn{
+    display: inline-block;
+    padding: .5rem 1rem;
+}

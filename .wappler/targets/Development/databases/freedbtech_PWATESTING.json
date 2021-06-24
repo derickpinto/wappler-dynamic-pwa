@@ -1,0 +1,63 @@
+{
+  "type": "mysql",
+  "connection": {
+    "host": "freedb.tech",
+    "user": "freedbtech_TesterPWA",
+    "password": "TesterPWA",
+    "database": "freedbtech_PWATESTING"
+  },
+  "direct": true,
+  "schema": {
+    "tables": {
+      "comments": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "freedbtech_PWATESTING",
+          "collation": "latin1_swedish_ci"
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "name": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "message": {
+            "db": {
+              "type": "string",
+              "maxLength": 1000,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "datetime": {
+            "db": {
+              "type": "string",
+              "maxLength": 50,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "image": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        }
+      }
+    },
+    "views": {}
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "index.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "offline.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  }
+}

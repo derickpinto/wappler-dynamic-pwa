@@ -1,0 +1,19 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "page": "index",
+      "layout": "main"
+    },
+    {
+      "path": "/",
+      "page": "index",
+      "layout": "main"
+    },
+    {
+      "path": "/offline",
+      "page": "offline",
+      "layout": "main"
+    }
+  ]
+}

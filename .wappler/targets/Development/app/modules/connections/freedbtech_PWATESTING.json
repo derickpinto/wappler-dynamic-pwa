@@ -1,0 +1,15 @@
+{
+  "name": "freedbtech_PWATESTING",
+  "module": "dbconnector",
+  "action": "connect",
+  "options": {
+    "client": "mysql",
+    "connection": {
+      "host": "freedb.tech",
+      "user": "freedbtech_TesterPWA",
+      "password": "TesterPWA",
+      "database": "freedbtech_PWATESTING"
+    }
+  },
+  "fileName": "freedbtech_PWATESTING.json"
+}
