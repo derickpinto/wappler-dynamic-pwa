@@ -35,5 +35,6 @@
   ],
   "activeTarget": "Development",
   "projectType": "web",
-  "projectLinksType": "site"
+  "projectLinksType": "site",
+  "npmInstall": true
 }
