@@ -1,7 +1,11 @@
-<!-- Wappler include head-page="layouts/main" is="dmx-app" id="index" appConnect="local" jquery_slim_35="local" fontawesome_4="local" bootstrap4="local" components="{dmxBootstrap4Modal:{},dmxSummernote:{},dmxValidator:{},dmxFormatter:{}}" -->
+<!-- Wappler include head-page="layouts/main" is="dmx-app" id="index" appConnect="local" jquery_slim_35="local" fontawesome_4="local" bootstrap4="local" components="{dmxBootstrap4Modal:{},dmxSummernote:{},dmxValidator:{},dmxFormatter:{},dmxStateManagement:{},dmxNotifications:{}}" -->
+<dmx-notifications id="notifies1"></dmx-notifications>
+<dmx-local-manager id="index_local"></dmx-local-manager>
+<dmx-value id="localFormValue"></dmx-value>
+<dmx-query-manager id="query1"></dmx-query-manager>
 <dmx-datetime id="datetimepicker" utc="true"></dmx-datetime>
 
-<dmx-serverconnect id="fetch_all_comments" url="/api/get_data/all_comments"></dmx-serverconnect>
+<dmx-serverconnect id="fetch_all_comments" url="/api/get_data/all_comments" cache="index_local"></dmx-serverconnect>
 
 <div class="modal" id="add_comment_modal" is="dmx-bs4-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -13,7 +17,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="add_comment" is="dmx-serverconnect-form" method="post" action="/api/post_data/post_new_comment" dmx-on:success="fetch_all_comments.load();add_comment_modal.hide()">
+                <form method="post" dmx-on:success="fetch_all_comments.load({},true);add_comment_modal.hide();" is="dmx-serverconnect-form" id="serverconnectform1" action="/api/post_data/post_new_comment"
+                    dmx-on:error="index_local.set('post_comment',JSON.stringfy({datetime:add_comment_modal.serverconnectform1.datetime.value,name:add_comment_modal.serverconnectform1.name.value,url:add_comment_modal.serverconnectform1.url.value,comment:add_comment_modal.serverconnectform1.comment.value}));notifies1.info('Some error occured, Background sync supposed to work now.')">
                     <input id="datetime" name="datetime" type="hidden" class="form-control" dmx-bind:value="datetimepicker.datetime.formatDate('dd/MM/yyyy')">
 
                     <div class="form-group">
@@ -30,7 +35,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="url" class="form-label">Image Url</label>
+                        <label for="url" class="form-label">Comment message</label>
                         <textarea id="comment" class="form-control form-input" required="" name="comment"></textarea>
                         <small id="input1_help2" class="form-text text-muted form-input-info">Write your comments</small>
                     </div>
@@ -52,13 +57,13 @@
 
 <section class="card-section">
     <div class="container">
-        <div class="row w-100 justify-content-center" is="dmx-repeat" id="repeat1" dmx-bind:repeat="fetch_all_comments.data.get_all_comments" key="id">
+        <div class="row w-100 justify-content-center" is="dmx-repeat" id="repeat1" key="id" dmx-bind:repeat="index_local.data['/api/get_data/all_comments?'].data.get_all_comments">
 
             <div class="col-12 col-md-10">
                 <div class="card pl-2 pr-2">
                     <div class="row justify-content-around w-100">
                         <div class="col-2 col-md-1">
-                            <img src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="profile" class="card-img card__image img-fluid" dmx-bind:src="image">
+                            <img src="" alt="profile" class="card-img card__image img-fluid" dmx-bind:src="image">
                         </div>
                         <div class="col card-content">
                             <h4 class="card-title">{{name}}</h4>
@@ -73,6 +78,6 @@
 
     </div>
 </section>
-
+<!-- <a href="/help">Help</a> -->
 <meta name="ac:route" content="/">
 <!-- New Wappler Page -->

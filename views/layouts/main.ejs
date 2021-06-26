@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="/bootstrap/4/css/bootstrap.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <script src="/dmxAppConnect/dmxRouting/dmxRouting.js" defer=""></script>
-  <script src="https://js.stripe.com/v3/"></script>
   <script src="/dmxAppConnect/dmxStripe/dmxStripe.js" defer=""></script>
   <script src="/dmxAppConnect/dmxBootstrap4Modal/dmxBootstrap4Modal.js" defer=""></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.css" />
@@ -37,15 +36,20 @@
   <link rel="apple-touch-icon" href="/assets/icon/apple-icon-114x114-dunplab-manifest-47724.png" sizes="144x144">
   <link rel="apple-touch-icon" href="/assets/icon/apple-icon-152x152-dunplab-manifest-47724.png" sizes="152x152">
   <link rel="apple-touch-icon" href="/assets/icon/apple-icon-180x180-dunplab-manifest-47724.png" sizes="180x180">
-  <meta name="msapplication-TileImage" content="/assets/icon/apple-icon-114x114-dunplab-manifest-47724.png">
+  <meta name="msapplication-TileImage" content="/assets/icon/icon-144.png">
   <meta name="msapplication-TileColor" content="#fff">
   <meta name="theme-color" content="#00aae7">
+  <script src="/dmxAppConnect/dmxStateManagement/dmxStateManagement.js" defer=""></script>
+  <link rel="stylesheet" href="/dmxAppConnect/dmxNotifications/dmxNotifications.css" />
+  <script src="/dmxAppConnect/dmxNotifications/dmxNotifications.js" defer=""></script>
 </head>
 
 <body is="dmx-app" id="main">
+  <dmx-local-manager id="local_Storage"></dmx-local-manager>
   <div is="dmx-view" id="content">
     <%- await include(content, locals); %>
   </div>
+  <p>version: 1.2</p>
   <script src="/bootstrap/4/js/popper.min.js"></script>
 
   <script src="/bootstrap/4/js/bootstrap.min.js"></script>
