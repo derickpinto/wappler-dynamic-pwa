@@ -1,6 +1,6 @@
 [build]
-    base = "/"
-    publish = "/"
+    base = "/index.js"
+    publish = "/index.js"
 [[redirects]]
     from = "/*"
     to = "/"
