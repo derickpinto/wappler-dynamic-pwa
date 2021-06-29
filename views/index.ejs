@@ -1,11 +1,11 @@
-<!-- Wappler include head-page="layouts/main" is="dmx-app" id="index" appConnect="local" jquery_slim_35="local" fontawesome_4="local" bootstrap4="local" components="{dmxBootstrap4Modal:{},dmxSummernote:{},dmxValidator:{},dmxFormatter:{},dmxStateManagement:{},dmxNotifications:{}}" -->
+<!-- Wappler include head-page="layouts/main" is="dmx-app" id="index" appConnect="local" jquery_slim_35="local" fontawesome_4="local" bootstrap4="local" components="{dmxBootstrap4Modal:{},dmxSummernote:{},dmxValidator:{},dmxFormatter:{},dmxStateManagement:{},dmxNotifications:{},dmxDatastore:{},dmxDataTraversal:{},dmxBootstrap4Toasts:{}}" -->
+<dmx-value id="local_storage" dmx-bind:value="index_local.data.get_comment"></dmx-value>
+<dmx-datastore id="data_store"></dmx-datastore>
 <dmx-notifications id="notifies1"></dmx-notifications>
 <dmx-local-manager id="index_local"></dmx-local-manager>
-<dmx-value id="localFormValue"></dmx-value>
-<dmx-query-manager id="query1"></dmx-query-manager>
 <dmx-datetime id="datetimepicker" utc="true"></dmx-datetime>
 
-<dmx-serverconnect id="fetch_all_comments" url="/api/get_data/all_comments" cache="index_local"></dmx-serverconnect>
+<dmx-serverconnect id="fetch_all_comments" url="/api/get_data/all_comments" dmx-on:success="index_local.set('get_comment',fetch_all_comments.data.get_all_comments)"></dmx-serverconnect>
 
 <div class="modal" id="add_comment_modal" is="dmx-bs4-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -17,13 +17,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" dmx-on:success="fetch_all_comments.load({},true);add_comment_modal.hide();" is="dmx-serverconnect-form" id="serverconnectform1" action="/api/post_data/post_new_comment"
-                    dmx-on:error="index_local.set('post_comment',JSON.stringfy({datetime:add_comment_modal.serverconnectform1.datetime.value,name:add_comment_modal.serverconnectform1.name.value,url:add_comment_modal.serverconnectform1.url.value,comment:add_comment_modal.serverconnectform1.comment.value}));notifies1.info('Some error occured, Background sync supposed to work now.')">
+                <form method="post" dmx-on:success="notifies1.success('Comment saved');fetch_all_comments.load({},true);add_comment_modal.hide()" is="dmx-serverconnect-form" id="serverconnectform1" action="/api/post_data/post_new_comment"
+                    dmx-on:error="run([{runJS:{function:'onFormSubmitError',name:'onFormSubmitError'}},{run:{action:`notifies1.warning(\'Some error occured, Your comment is stored for syncing.\')`}},{run:{action:`add_comment_modal.hide()`}}])">
                     <input id="datetime" name="datetime" type="hidden" class="form-control" dmx-bind:value="datetimepicker.datetime.formatDate('dd/MM/yyyy')">
+                    <input id="datetime1" name="datetime1" type="hidden" class="form-control" dmx-bind:value="datetimepicker.datetime">
 
                     <div class="form-group">
                         <label for="name" class="form-label">Your Name</label>
-                        <input type="text" class="form-control form-input" id="name" name="name" aria-describedby="input1_help" placeholder="Enter some text" required="">
+                        <input type="text" class="form-control form-input" id="name" name="name" aria-describedby="input1_help" placeholder="Enter some text" required="" dmx-bind:value="'Jhone Doe'">
                         <small id="input1_help" class="form-text text-muted form-input-info">You can give any random name</small>
                     </div>
 
@@ -36,7 +37,7 @@
 
                     <div class="form-group">
                         <label for="url" class="form-label">Comment message</label>
-                        <textarea id="comment" class="form-control form-input" required="" name="comment"></textarea>
+                        <textarea id="comment" class="form-control form-input" required="" name="comment" dmx-bind:value="'This is test message.'"></textarea>
                         <small id="input1_help2" class="form-text text-muted form-input-info">Write your comments</small>
                     </div>
 
@@ -57,7 +58,14 @@
 
 <section class="card-section">
     <div class="container">
-        <div class="row w-100 justify-content-center" is="dmx-repeat" id="repeat1" key="id" dmx-bind:repeat="index_local.data['/api/get_data/all_comments?'].data.get_all_comments">
+        <div class="d-flex no-comments justify-content-center align-items-center" dmx-show="fetch_all_comments.state.executing">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+        <div class="d-flex no-comments justify-content-center align-items-center" dmx-hide="(fetch_all_comments.state.executing || fetch_all_comments.data.get_all_comments.hasItems())">
+            <p class="paragraph">Be the first person to comment</p>
+        </div>
+        <div class="row w-100 justify-content-center" is="dmx-repeat" id="repeat1" key="id" dmx-bind:repeat="index_local.data.get_comment">
 
             <div class="col-12 col-md-10">
                 <div class="card pl-2 pr-2">
@@ -78,6 +86,7 @@
 
     </div>
 </section>
+
 <!-- <a href="/help">Help</a> -->
 <meta name="ac:route" content="/">
 <!-- New Wappler Page -->

@@ -7,3 +7,15 @@ if ('serviceWorker' in navigator) {
             console.log('Service worker is not registered');
         })
 }
+
+
+
+function syncComment() {
+
+    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+        navigator.serviceWorker.ready.then(function (swRegistration) {
+            return swRegistration.sync.register('sync-post-comment');
+        });
+    }
+
+}

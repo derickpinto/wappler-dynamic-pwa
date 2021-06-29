@@ -42,10 +42,11 @@
   <script src="/dmxAppConnect/dmxStateManagement/dmxStateManagement.js" defer=""></script>
   <link rel="stylesheet" href="/dmxAppConnect/dmxNotifications/dmxNotifications.css" />
   <script src="/dmxAppConnect/dmxNotifications/dmxNotifications.js" defer=""></script>
+  <script src="/dmxAppConnect/dmxDatastore/dmxDatastore.js" defer=""></script>
+  <script src="/dmxAppConnect/dmxDataTraversal/dmxDataTraversal.js" defer=""></script>
 </head>
 
 <body is="dmx-app" id="main">
-  <dmx-local-manager id="local_Storage"></dmx-local-manager>
   <div is="dmx-view" id="content">
     <%- await include(content, locals); %>
   </div>
@@ -53,7 +54,10 @@
   <script src="/bootstrap/4/js/popper.min.js"></script>
 
   <script src="/bootstrap/4/js/bootstrap.min.js"></script>
+  <script src="/js/idb.js"></script>
+  <script src="/js/utility.js"></script>
   <script src="/js/app.js"></script>
+  <script src="/js/comment.js"></script>
 </body>
 
 </html>

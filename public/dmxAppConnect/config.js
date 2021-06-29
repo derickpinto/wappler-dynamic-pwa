@@ -12,10 +12,6 @@ dmx.config({
     ],
     "localStorage": [
       {
-        "type": "array",
-        "name": "data"
-      },
-      {
         "type": "object",
         "name": "headers"
       },
@@ -24,8 +20,12 @@ dmx.config({
         "name": "/api/get_data/all_comments?"
       },
       {
-        "type": "array",
+        "type": "object",
         "name": "post_comment"
+      },
+      {
+        "type": "object",
+        "name": "get_comment"
       }
     ],
     "repeat_on_fail": {
@@ -56,6 +56,34 @@ dmx.config({
     "repeat2": {
       "meta": null,
       "outputType": "array"
+    },
+    "data_store": [
+      {
+        "type": "text",
+        "name": "datetime"
+      },
+      {
+        "type": "text",
+        "name": "name"
+      },
+      {
+        "type": "text",
+        "name": "url"
+      },
+      {
+        "type": "text",
+        "name": "message"
+      }
+    ],
+    "sync_comment": [
+      {
+        "name": "syncComment",
+        "type": "text"
+      }
+    ],
+    "local_storage": {
+      "meta": null,
+      "outputType": "object"
     }
   },
   "main": {
