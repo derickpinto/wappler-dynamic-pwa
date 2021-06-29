@@ -62,10 +62,10 @@
             <div class="spinner-border" role="status">
             </div>
         </div>
-        <div class="d-flex no-comments justify-content-center align-items-center" dmx-hide="(fetch_all_comments.state.executing || fetch_all_comments.data.get_all_comments.hasItems())">
+        <div class="d-flex no-comments justify-content-center align-items-center" dmx-hide="(fetch_all_comments.state.executing || index_local.data.get_comment.hasItems())">
             <p class="paragraph">Be the first person to comment</p>
         </div>
-        <div class="row w-100 justify-content-center" is="dmx-repeat" id="repeat1" key="id" dmx-bind:repeat="index_local.data.get_comment">
+        <div class="row w-100 justify-content-center" is="dmx-repeat" id="repeat1" key="id" dmx-bind:repeat="index_local.data.get_comment" dmx-hide="fetch_all_comments.state.executing">
 
             <div class="col-12 col-md-10">
                 <div class="card pl-2 pr-2">
