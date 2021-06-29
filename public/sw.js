@@ -132,7 +132,8 @@ function postSyncComments(url, data) {
             }
 
         }).catch((error) => {
-            reject();
+            console.log('[error post message]', error.message)
+            reject(error);
         })
     })
 
