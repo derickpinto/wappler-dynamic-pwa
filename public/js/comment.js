@@ -1,18 +1,18 @@
-// function resetLocalValues(newComment) {
-//     var oldComments = dmx.parse('content.index_local.data.get_comment');
+function resetLocalValues(newComment) {
+    var oldComments = dmx.parse('content.index_local.data.get_comment');
 
-//     var lastComment = oldComments[0];
+    var lastComment = oldComments[0];
 
-//     if (lastComment) {
-//         newComment["id"] = lastComment["id"] + 1;
-//     } else {
-//         newComment["id"] = 1;
-//     }
+    if (lastComment) {
+        newComment["id"] = lastComment["id"] + 1;
+    } else {
+        newComment["id"] = 1;
+    }
 
-//     var newArray = [newComment].concat(oldComments);
+    var newArray = [newComment].concat(oldComments);
 
-//     dmx.parse('content.index_local.set("get_comment",' + JSON.stringify(newArray) + ')');
-// }
+    dmx.parse('content.index_local.set("get_comment",' + JSON.stringify(newArray) + ')');
+}
 
 function registerOneTimeSync() {
     if (navigator.serviceWorker.controller) {
@@ -57,7 +57,7 @@ const sendComments = (payload) => {
 
 }
 
-function onFailure() {
+function onSubmit() {
 
     const form = document.querySelector("form");
 
@@ -72,25 +72,22 @@ function onFailure() {
 
     if ('serviceWorker' in navigator && 'SyncManager' in window) {
 
-        writeData('sync-comments', comment)
-            .then(function () {
-                return navigator.serviceWorker.ready
-                    .then(function (reg) {
-                        return reg.sync.register('sync-new-comment');
-                    })
-                    .then(res => {
-                        dmx.parse('content.notifies1.success("Comment saved for syncing.")');
-                    })
-            })
-            .catch(function (err) {
-                console.log("Error")
-                postDataFromThePage(comment);
-                return;
-            });
+        navigator.serviceWorker.ready
+            .then(function (sw) {
 
+                writeData('sync-comments', comment)
+                    .then(function () {
+                        console.log("[Sync tag registered]");
+                        return sw.sync.register('sync-new-comment');
+                    })
+                    .then(function () {
+                        resetLocalValues(comment);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            });
     } else {
-        console.log("No sync manager")
-        // serviceworker/sync not supported
-        postDataFromThePage(comment);
+        sendComments(comment);
     }
 }

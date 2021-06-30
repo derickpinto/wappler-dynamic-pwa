@@ -110,8 +110,9 @@ self.addEventListener('fetch', event => {
     }
 });
 
-function postSyncComments(url, data) {
-    console.log("[Post comment]");
+function postSyncComments(data) {
+
+    const url = "http://wappler-dynamic-pwa.herokuapp.com/api/post_data/post_new_comment";
 
     return new Promise((resolve, reject) => {
         fetch(url, {
@@ -146,15 +147,12 @@ self.addEventListener('sync', event => {
 
     if (event.tag === "sync-new-comment") {
 
-
-        const url = "/api/post_data/post_new_comment";
-
         event.waitUntil(
 
             readAllData('sync-comments').then(data => {
 
                 data.forEach(async dt => {
-                    await postSyncComments(url, dt);
+                    await postSyncComments(dt);
                 })
 
             })

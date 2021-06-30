@@ -17,8 +17,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" dmx-on:success="notifies1.success('Comment saved');fetch_all_comments.load({},true);add_comment_modal.hide()" is="dmx-serverconnect-form" id="serverconnectform1" action="/api/post_data/post_new_comment"
-                    dmx-on:error="run([{runJS:{function:'onFailure',name:'onFailure'}},{run:{action:`add_comment_modal.hide()`}}])">
+                <form id="comment_form" dmx-on:submit.prevent="run([{runJS:{function:'onSubmit',name:'onSubmit'}},{run:{action:`add_comment_modal.hide()`}}])">
                     <input id="datetime" name="datetime" type="hidden" class="form-control" dmx-bind:value="datetimepicker.datetime.formatDate('dd/MM/yyyy')">
                     <input id="datetime1" name="datetime1" type="hidden" class="form-control" dmx-bind:value="datetimepicker.datetime">
 
