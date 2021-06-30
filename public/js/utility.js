@@ -46,3 +46,37 @@ function deleteItemFromData(st, id) {
             return tx.complete;
         });
 }
+
+function storeOfflineComments(data) {
+
+    console.log("Coming here")
+
+    const url = "/api/post_data/post_new_comment";
+
+    return new Promise((resolve, reject) => {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json",
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                datetime: data.datetime,
+                name: data.name,
+                url: data.image,
+                comment: data.message
+            })
+        }).then(async (res) => {
+
+            if (res.ok) {
+                await deleteItemFromData('sync-comments', data.datetime1);
+                resolve();
+            }
+
+        }).catch((error) => {
+            console.log('[error post message]', error.message)
+            reject(error);
+        })
+    })
+
+}

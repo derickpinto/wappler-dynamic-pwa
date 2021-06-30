@@ -1,8 +1,8 @@
 importScripts('/js/idb.js');
 importScripts('/js/utility.js');
 
-var CACHE_STATIC_NAME = 'static-v1.0.33';
-var CACHE_DYNAMIC_NAME = 'dynamic-v1.0.11';
+var CACHE_STATIC_NAME = 'static-v1.0.35';
+var CACHE_DYNAMIC_NAME = 'dynamic-v1.0.12';
 var STATIC_FILES = [
     '/',
     '/offline',
@@ -89,7 +89,6 @@ function isInArray(string, array) {
 
 self.addEventListener('fetch', event => {
 
-
     if (event.request.url.indexOf('/api') === -1) {
         event.respondWith(
             caches.match(event.request)
@@ -97,67 +96,36 @@ self.addEventListener('fetch', event => {
 
                     return cacheRes || fetch(event.request).then(fetchRes => {
                         return caches.open(CACHE_DYNAMIC_NAME).then(cache => {
-                            cacheput(event.request.url, fetchRes.clone());
-                            limitCacheSize(CACHE_DYNAMIC_NAME, 30);
+                            cache.put(event.request.url, fetchRes.clone());
+                            limitCacheSize(CACHE_DYNAMIC_NAME, 15);
                             return fetchRes;
                         })
                     })
 
-                }).catch(() => {
+                })
+                .catch(() => {
                     return caches.match('/offline');
                 })
         );
     }
 });
 
-function postSyncComments(data) {
 
-    const url = "http://wappler-dynamic-pwa.herokuapp.com/api/post_data/post_new_comment";
-
-    return new Promise((resolve, reject) => {
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': "application/json",
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                datetime: data.datetime,
-                name: data.name,
-                url: data.image,
-                comment: data.message
-            })
-        }).then(async (res) => {
-
-            if (res.ok) {
-                await deleteItemFromData('sync-comments', data.datetime1);
-                resolve();
-            }
-
-        }).catch((error) => {
-            console.log('[error post message]', error.message)
-            reject(error);
-        })
-    })
-
-}
 
 self.addEventListener('sync', event => {
-    console.log("[Service worker sync]", event.tag);
 
     if (event.tag === "sync-new-comment") {
 
+        console.log("[Service worker sync]");
+
         event.waitUntil(
-
             readAllData('sync-comments').then(data => {
-
                 data.forEach(async dt => {
-                    await postSyncComments(dt);
+                    await storeOfflineComments(dt);
                 })
-
             })
-
         );
     }
 
 })
+

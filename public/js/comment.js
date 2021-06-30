@@ -1,6 +1,10 @@
 function resetLocalValues(newComment) {
     var oldComments = dmx.parse('content.index_local.data.get_comment');
 
+    if (!oldComments) {
+        return;
+    }
+
     var lastComment = oldComments[0];
 
     if (lastComment) {
