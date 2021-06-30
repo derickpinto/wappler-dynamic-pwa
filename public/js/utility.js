@@ -37,13 +37,12 @@ function clearAllData(st) {
         });
 }
 
-async function deleteItemFromData(st, id) {
-    await dbPromise
+function deleteItemFromData(st, id) {
+    dbPromise
         .then(function (db) {
             var tx = db.transaction(st, 'readwrite');
             var store = tx.objectStore(st);
             store.delete(id);
-            console.log('[Utility delete]', { st, id });
             return tx.complete;
         });
 }

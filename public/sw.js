@@ -1,7 +1,7 @@
 importScripts('/js/idb.js');
 importScripts('/js/utility.js');
 
-var CACHE_STATIC_NAME = 'static-v1.0.31';
+var CACHE_STATIC_NAME = 'static-v1.0.33';
 var CACHE_DYNAMIC_NAME = 'dynamic-v1.0.11';
 var STATIC_FILES = [
     '/',
@@ -111,6 +111,8 @@ self.addEventListener('fetch', event => {
 });
 
 function postSyncComments(url, data) {
+    console.log("[Post comment]");
+
     return new Promise((resolve, reject) => {
         fetch(url, {
             method: 'POST',
@@ -140,8 +142,10 @@ function postSyncComments(url, data) {
 }
 
 self.addEventListener('sync', event => {
+    console.log("[Service worker sync]", event.tag);
 
     if (event.tag === "sync-new-comment") {
+
 
         const url = "/api/post_data/post_new_comment";
 
