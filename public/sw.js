@@ -1,8 +1,8 @@
 importScripts('/js/idb.js');
 importScripts('/js/utility.js');
 
-var CACHE_STATIC_NAME = 'static-v1.0.35';
-var CACHE_DYNAMIC_NAME = 'dynamic-v1.0.12';
+var CACHE_STATIC_NAME = 'static-v1.0.36';
+var CACHE_DYNAMIC_NAME = 'dynamic-v1.0.13';
 var STATIC_FILES = [
     '/',
     '/offline',
@@ -112,20 +112,20 @@ self.addEventListener('fetch', event => {
 
 
 
-self.addEventListener('sync', event => {
+self.addEventListener('sync', function (event) {
 
-    if (event.tag === "sync-new-comment") {
-
-        console.log("[Service worker sync]");
-
+    if (event.tag === 'sync-new-comment') {
+        console.log('[Service Worker] Syncing new Posts');
         event.waitUntil(
-            readAllData('sync-comments').then(data => {
-                data.forEach(async dt => {
-                    await storeOfflineComments(dt);
+            readAllData('sync-comments')
+                .then(function (data) {
+                    setTimeout(() => {
+                        data.forEach(async (dt) => {
+                            await storeOfflineComments(dt);
+                        })
+                    }, 5000);
                 })
-            })
         );
     }
 
-})
-
+});

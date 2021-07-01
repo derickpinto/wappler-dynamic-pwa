@@ -38,60 +38,65 @@ function registerOneTimeSync() {
     }
 }
 
-const sendComments = (payload) => {
+// const sendComments = (payload) => {
 
-    fetch("/api/post_data/post_new_comment", {
-        method: "POST",
-        headers: {
-            'Content-Type': "application/json",
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            datetime: payload.datetime,
-            name: payload.name,
-            url: payload.image,
-            comment: payload.message
-        })
-    }).then(res => {
-        dmx.parse('content.notifies1.success("Comment saved")');
-    })
-        .catch(() => {
-            dmx.parse('content.notifies1.warning("Comment saved")');
-        })
+//     fetch("/api/post_data/post_new_comment", {
+//         method: "POST",
+//         headers: {
+//             'Content-Type': "application/json",
+//             'Accept': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             datetime: payload.datetime,
+//             name: payload.name,
+//             url: payload.image,
+//             comment: payload.message
+//         })
+//     }).then(res => {
+//         dmx.parse('content.notifies1.success("Comment saved")');
+//     })
+//         .catch(() => {
+//             dmx.parse('content.notifies1.warning("Comment saved")');
+//         })
 
-}
+// }
 
-function onSubmit() {
+function onFailure() {
 
-    const form = document.querySelector("form");
-
-    var comment = {
-        datetime1: form.datetime1.value,
-        datetime: form.datetime.value,
-        name: form.name.value,
-        image: form.url.value,
-        message: form.comment.value
-    };
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+    }
 
 
+    var form = document.querySelector("form");
+
+    //Register the sync on post form error
     if ('serviceWorker' in navigator && 'SyncManager' in window) {
 
         navigator.serviceWorker.ready
             .then(function (sw) {
+                var post = {
+                    datetime1: form.datetime1.value,
+                    datetime: form.datetime.value,
+                    name: form.name.value,
+                    image: form.url.value,
+                    message: form.comment.value
+                };
 
-                writeData('sync-comments', comment)
+                writeData('sync-comments', post)
                     .then(function () {
-                        console.log("[Sync tag registered]");
                         return sw.sync.register('sync-new-comment');
                     })
                     .then(function () {
-                        resetLocalValues(comment);
+                        // var snackbarContainer = document.querySelector('#confirmation-toast');
+                        // var data = { message: 'Your Post was saved for syncing!' };
+                        // snackbarContainer.MaterialSnackbar.showSnackbar(data);
+                        console.log("[Sync tag registered]");
                     })
                     .catch(function (err) {
                         console.log(err);
                     });
+
             });
-    } else {
-        sendComments(comment);
     }
 }

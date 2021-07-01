@@ -17,32 +17,34 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="comment_form" dmx-on:submit.prevent="run([{runJS:{function:'onSubmit',name:'onSubmit'}},{run:{action:`add_comment_modal.hide()`}}])">
+                <form id="comment_form" method="post" is="dmx-serverconnect-form" action="/api/post_data/post_new_comment" dmx-on:success="fetch_all_comments.load({});add_comment_modal.hide();notifies1.success('Comment posted.')"
+                    dmx-on:error="run([{runJS:{function:'onFailure',name:'onFailure'}},{run:{action:`notifies1.warning(\'Comment will be synced later.\');add_comment_modal.hide()`}}])">
                     <input id="datetime" name="datetime" type="hidden" class="form-control" dmx-bind:value="datetimepicker.datetime.formatDate('dd/MM/yyyy')">
                     <input id="datetime1" name="datetime1" type="hidden" class="form-control" dmx-bind:value="datetimepicker.datetime">
 
                     <div class="form-group">
                         <label for="name" class="form-label">Your Name</label>
-                        <input type="text" class="form-control form-input" id="name" name="name" aria-describedby="input1_help" placeholder="Enter some text" required="" dmx-bind:value="'Jhone Doe'">
+                        <input type="text" class="form-control form-input" id="name" name="name" aria-describedby="input1_help" placeholder="Enter some text" required="" dmx-bind:value="'Jhon Doe'" dmx-bind:disabled="state.executing">
                         <small id="input1_help" class="form-text text-muted form-input-info">You can give any random name</small>
                     </div>
 
                     <div class="form-group">
                         <label for="url" class="form-label">Image Url</label>
                         <input type="text" class="form-control form-input" id="url" name="url" aria-describedby="input1_help" placeholder="Enter some text" required="" data-rule-url=""
-                            dmx-bind:value="'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg'">
+                            dmx-bind:value="'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg'" dmx-bind:disabled="state.executing">
                         <small id="input1_help1" class="form-text text-muted form-input-info">Please submit a image url from the web</small>
                     </div>
 
                     <div class="form-group">
                         <label for="url" class="form-label">Comment message</label>
-                        <textarea id="comment" class="form-control form-input" required="" name="comment" dmx-bind:value="'This is test message.'"></textarea>
+                        <textarea id="comment" class="form-control form-input" required="" name="comment" dmx-bind:value="'This is test message.'" dmx-bind:disabled="state.executing"></textarea>
                         <small id="input1_help2" class="form-text text-muted form-input-info">Write your comments</small>
                     </div>
 
                     <div class="form-buttons">
-                        <button id="btn2" class="from-btn btn btn-primary" type="submit">Submit</button>
-                        <button id="btn3" class="form-btn btn" type="reset">Clear</button>
+                        <button id="btn2" class="from-btn btn btn-primary" type="submit" dmx-bind:disabled="state.executing">Submit
+                        </button>
+                        <button id="btn3" class="form-btn btn" type="reset" dmx-bind:disabled="state.executing">Clear</button>
                     </div>
                 </form>
             </div>

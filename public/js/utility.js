@@ -49,8 +49,6 @@ function deleteItemFromData(st, id) {
 
 function storeOfflineComments(data) {
 
-    console.log("Coming here")
-
     const url = "/api/post_data/post_new_comment";
 
     return new Promise((resolve, reject) => {
@@ -68,14 +66,15 @@ function storeOfflineComments(data) {
             })
         }).then(async (res) => {
 
+
             if (res.ok) {
                 await deleteItemFromData('sync-comments', data.datetime1);
                 resolve();
             }
 
         }).catch((error) => {
-            console.log('[error post message]', error.message)
-            reject(error);
+            console.log('[error post message]', error.message);
+            throw error;
         })
     })
 
