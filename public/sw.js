@@ -1,12 +1,19 @@
 importScripts('/js/idb.js');
 importScripts('/js/utility.js');
 
-var CACHE_STATIC_NAME = 'static-v1.0.36';
-var CACHE_DYNAMIC_NAME = 'dynamic-v1.0.13';
+var CACHE_STATIC_NAME = 'static-v1.0.38';
+var CACHE_DYNAMIC_NAME = 'dynamic-v1.0.15';
 var STATIC_FILES = [
     '/',
     '/offline',
     '/assets/icon/apple-icon-76x76-dunplab-manifest-47724.png',
+    '/assets/icon/apple-icon-57x57-dunplab-manifest-47724.png',
+    '/assets/icon/apple-icon-60x60-dunplab-manifest-47724.png',
+    '/assets/icon/apple-icon-72x72-dunplab-manifest-47724.png',
+    '/assets/icon/apple-icon-120x120-dunplab-manifest-47724.png',
+    '/assets/icon/apple-icon-114x114-dunplab-manifest-47724.png',
+    '/assets/icon/apple-icon-152x152-dunplab-manifest-47724.png',
+    '/assets/icon/apple-icon-180x180-dunplab-manifest-47724.png',
     '/assets/icon/icon-144.png',
     '/bootstrap/4/css/bootstrap.min.css',
     '/bootstrap/4/js/bootstrap.min.js',
@@ -89,7 +96,7 @@ function isInArray(string, array) {
 
 self.addEventListener('fetch', event => {
 
-    if (event.request.url.indexOf('/api') === -1) {
+    if (event.request.url.indexOf('/api/') === -1) {
         event.respondWith(
             caches.match(event.request)
                 .then(cacheRes => {
@@ -114,14 +121,40 @@ self.addEventListener('fetch', event => {
 
 self.addEventListener('sync', function (event) {
 
+    console.log("[Service worker] Sync new comment", event);
     if (event.tag === 'sync-new-comment') {
-        console.log('[Service Worker] Syncing new Posts');
         event.waitUntil(
             readAllData('sync-comments')
                 .then(function (data) {
                     setTimeout(() => {
                         data.forEach(async (dt) => {
-                            await storeOfflineComments(dt);
+
+                            const url = "/api/post_data/post_new_comment";
+                            const parameters = {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': "application/json",
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    datetime: dt.datetime,
+                                    name: dt.name,
+                                    url: dt.image,
+                                    comment: dt.message,
+                                    datetime1: dt.datetime1,
+                                })
+                            };
+
+                            return fetch(url, parameters)
+                                .then((res) => {
+                                    return res.json();
+                                })
+                                .then(response => {
+                                    if (response && response.datetimeid) deleteItemFromData('sync-comments', response.datetimeid);
+                                }).catch((error) => {
+                                    console.log('[error post message]', error.message);
+                                })
+
                         })
                     }, 5000);
                 })

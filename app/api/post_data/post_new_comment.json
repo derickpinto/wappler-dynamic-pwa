@@ -2,13 +2,18 @@
   "meta": {
     "options": {
       "linkedFile": "/views/index.ejs",
-      "linkedForm": "add_comment"
+      "linkedForm": "comment_form"
     },
     "$_POST": [
       {
         "type": "text",
         "fieldName": "datetime",
         "name": "datetime"
+      },
+      {
+        "type": "text",
+        "fieldName": "datetime1",
+        "name": "datetime1"
       },
       {
         "type": "text",
@@ -52,77 +57,100 @@
     ]
   },
   "exec": {
-    "steps": {
-      "name": "insert",
-      "module": "dbupdater",
-      "action": "insert",
-      "options": {
-        "connection": "freedbtech_PWATESTING",
-        "sql": {
-          "type": "insert",
-          "values": [
-            {
-              "table": "comments",
-              "column": "name",
-              "type": "text",
-              "value": "{{$_POST.name}}"
-            },
-            {
-              "table": "comments",
-              "column": "message",
-              "type": "text",
-              "value": "{{$_POST.comment}}"
-            },
-            {
-              "table": "comments",
-              "column": "datetime",
-              "type": "text",
-              "value": "{{$_POST.datetime}}"
-            },
-            {
-              "table": "comments",
-              "column": "image",
-              "type": "text",
-              "value": "{{$_POST.url}}"
-            }
-          ],
-          "table": "comments",
-          "returning": "id",
-          "query": "INSERT INTO comments\n(name, message, datetime, image) VALUES (:P1 /* {{$_POST.name}} */, :P2 /* {{$_POST.comment}} */, :P3 /* {{$_POST.datetime}} */, :P4 /* {{$_POST.url}} */)",
-          "params": [
-            {
-              "name": ":P1",
-              "type": "expression",
-              "value": "{{$_POST.name}}"
-            },
-            {
-              "name": ":P2",
-              "type": "expression",
-              "value": "{{$_POST.comment}}"
-            },
-            {
-              "name": ":P3",
-              "type": "expression",
-              "value": "{{$_POST.datetime}}"
-            },
-            {
-              "name": ":P4",
-              "type": "expression",
-              "value": "{{$_POST.url}}"
-            }
-          ]
-        }
-      },
-      "meta": [
-        {
-          "name": "identity",
-          "type": "text"
+    "steps": [
+      {
+        "name": "insert",
+        "module": "dbupdater",
+        "action": "insert",
+        "options": {
+          "connection": "freedbtech_PWATESTING",
+          "sql": {
+            "type": "insert",
+            "values": [
+              {
+                "table": "comments",
+                "column": "name",
+                "type": "text",
+                "value": "{{$_POST.name}}"
+              },
+              {
+                "table": "comments",
+                "column": "message",
+                "type": "text",
+                "value": "{{$_POST.comment}}"
+              },
+              {
+                "table": "comments",
+                "column": "datetime",
+                "type": "text",
+                "value": "{{$_POST.datetime}}"
+              },
+              {
+                "table": "comments",
+                "column": "image",
+                "type": "text",
+                "value": "{{$_POST.url}}"
+              },
+              {
+                "table": "comments",
+                "column": "datetime_id",
+                "type": "text",
+                "value": "{{$_POST.datetime1}}"
+              }
+            ],
+            "table": "comments",
+            "returning": "id",
+            "query": "INSERT INTO comments\n(name, message, datetime, image, datetime_id) VALUES (:P1 /* {{$_POST.name}} */, :P2 /* {{$_POST.comment}} */, :P3 /* {{$_POST.datetime}} */, :P4 /* {{$_POST.url}} */, :P5 /* {{$_POST.datetime1}} */)",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.name}}"
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.comment}}"
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.datetime}}"
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.url}}"
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{$_POST.datetime1}}"
+              }
+            ]
+          }
         },
-        {
-          "name": "affected",
-          "type": "number"
-        }
-      ]
-    }
+        "meta": [
+          {
+            "name": "identity",
+            "type": "text"
+          },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ],
+        "output": false
+      },
+      {
+        "name": "datetimeid",
+        "module": "core",
+        "action": "setvalue",
+        "options": {
+          "value": "{{$_POST.datetime1}}"
+        },
+        "output": true
+      }
+    ]
   }
 }

@@ -85,12 +85,9 @@ function onFailure() {
 
                 writeData('sync-comments', post)
                     .then(function () {
-                        return sw.sync.register('sync-new-comment');
+                        return sw.sync.register('myfirstsync');
                     })
                     .then(function () {
-                        // var snackbarContainer = document.querySelector('#confirmation-toast');
-                        // var data = { message: 'Your Post was saved for syncing!' };
-                        // snackbarContainer.MaterialSnackbar.showSnackbar(data);
                         console.log("[Sync tag registered]");
                     })
                     .catch(function (err) {

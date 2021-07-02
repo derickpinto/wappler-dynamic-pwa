@@ -54,6 +54,14 @@
               "primary": false,
               "nullable": true
             }
+          },
+          "datetime_id": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
           }
         }
       }
