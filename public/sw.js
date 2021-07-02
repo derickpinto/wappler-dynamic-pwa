@@ -145,7 +145,7 @@ self.addEventListener('sync', function (event) {
                                 })
                             };
 
-                            return fetch(url, parameters)
+                            fetch(url, parameters)
                                 .then((res) => {
                                     return res.json();
                                 })

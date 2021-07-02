@@ -85,7 +85,7 @@ function onFailure() {
 
                 writeData('sync-comments', post)
                     .then(function () {
-                        return sw.sync.register('myfirstsync');
+                        return sw.sync.register('sync-new-comment');
                     })
                     .then(function () {
                         console.log("[Sync tag registered]");

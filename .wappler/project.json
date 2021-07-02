@@ -21,20 +21,29 @@
       "type": "local"
     }
   ],
-  "projectServerModel": "node",
   "webRootFolder": "/public",
-  "useRouting": true,
   "addBase": true,
-  "routingHandler": "node",
   "targets": [
     {
       "name": "Development",
       "remoteURL": "http://localhost:3000/",
       "access": "local"
+    },
+    {
+      "name": "Production",
+      "remoteURL": "https://dynamic-pwa-f14af.web.app",
+      "targetType": "firebase",
+      "usage": "production",
+      "firebaseProjectID": "dynamic-pwa-f14af",
+      "msSQLVersion": "2019-latest"
     }
   ],
   "activeTarget": "Development",
   "projectType": "web",
   "projectLinksType": "site",
-  "npmInstall": true
+  "npmInstall": true,
+  "firebaseProjectID": "dynamic-pwa",
+  "routingHandler": "node",
+  "projectServerModel": "node",
+  "useRouting": true
 }
