@@ -1,15 +1,17 @@
 var deferredPrompt = null;
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register("/sw.js")
-        .then(function (event) {
-            console.log('Service worker is registered');
-        })
-        .catch(function (error) {
-            console.log('Service worker is not registered');
-        })
+    // Use the window load event to keep the page load performant
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw-base.js')
+            .then(function (event) {
+                console.log('Service worker is registered');
+            })
+            .catch(function (error) {
+                console.log('Service worker is not registered');
+            });
+    });
 }
-
 
 
 function syncComment() {

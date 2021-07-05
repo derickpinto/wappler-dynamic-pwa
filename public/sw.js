@@ -1,6 +1,7 @@
 importScripts('/js/idb.js');
 importScripts('/js/utility.js');
 
+
 var CACHE_STATIC_NAME = 'static-v1.0.38';
 var CACHE_DYNAMIC_NAME = 'dynamic-v1.0.15';
 var STATIC_FILES = [
@@ -43,7 +44,6 @@ var STATIC_FILES = [
     'https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900',
     'https://fonts.gstatic.com/s/lato/v17/S6u9w4BMUTPHh6UVSwiPGQ.woff2',
     'https://fonts.gstatic.com/s/lato/v17/S6uyw4BMUTPHjx4wXg.woff2',
-    'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg',
     'https://js.stripe.com/v3/',
     'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
     'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0',
@@ -121,14 +121,14 @@ self.addEventListener('fetch', event => {
 
 self.addEventListener('sync', function (event) {
 
-    console.log("[Service worker] Sync new comment", event);
     if (event.tag === 'sync-new-comment') {
+
         event.waitUntil(
             readAllData('sync-comments')
                 .then(function (data) {
                     setTimeout(() => {
                         data.forEach(async (dt) => {
-
+                            console.log("[Indexeddb offline data]", dt);
                             const url = "/api/post_data/post_new_comment";
                             const parameters = {
                                 method: 'POST',
@@ -154,11 +154,11 @@ self.addEventListener('sync', function (event) {
                                 }).catch((error) => {
                                     console.log('[error post message]', error.message);
                                 })
-
                         })
                     }, 5000);
                 })
         );
-    }
 
+    }
 });
+

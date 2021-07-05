@@ -62,17 +62,10 @@ function registerOneTimeSync() {
 // }
 
 function onFailure() {
-
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-    }
-
-
     var form = document.querySelector("form");
 
     //Register the sync on post form error
     if ('serviceWorker' in navigator && 'SyncManager' in window) {
-
         navigator.serviceWorker.ready
             .then(function (sw) {
                 var post = {
@@ -82,7 +75,6 @@ function onFailure() {
                     image: form.url.value,
                     message: form.comment.value
                 };
-
                 writeData('sync-comments', post)
                     .then(function () {
                         return sw.sync.register('sync-new-comment');
@@ -93,7 +85,6 @@ function onFailure() {
                     .catch(function (err) {
                         console.log(err);
                     });
-
             });
     }
 }
