@@ -1,14 +1,13 @@
-var deferredPrompt = null;
 
 if ('serviceWorker' in navigator) {
     // Use the window load event to keep the page load performant
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw-base.js')
-            .then(function (event) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function () {
                 console.log('Service worker is registered');
             })
             .catch(function (error) {
-                console.log('Service worker is not registered');
+                console.log('Service worker is not registered', error.message);
             });
     });
 }
@@ -23,11 +22,3 @@ function syncComment() {
     }
 
 }
-
-
-window.addEventListener('beforeinstallprompt', function (event) {
-    console.log('beforeinstallprompt fired');
-    event.preventDefault();
-    deferredPrompt = event;
-    return false;
-});

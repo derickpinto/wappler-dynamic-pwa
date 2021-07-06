@@ -64,10 +64,11 @@ function registerOneTimeSync() {
 function onFailure() {
     var form = document.querySelector("form");
 
-    //Register the sync on post form error
+    //     //Register the sync on post form error
     if ('serviceWorker' in navigator && 'SyncManager' in window) {
         navigator.serviceWorker.ready
             .then(function (sw) {
+
                 var post = {
                     datetime1: form.datetime1.value,
                     datetime: form.datetime.value,
@@ -75,15 +76,16 @@ function onFailure() {
                     image: form.url.value,
                     message: form.comment.value
                 };
+
                 writeData('sync-comments', post)
                     .then(function () {
-                        return sw.sync.register('sync-new-comment');
+                        return sw.sync.register('post-comment');
                     })
                     .then(function () {
                         console.log("[Sync tag registered]");
                     })
                     .catch(function (err) {
-                        console.log(err);
+                        console.log("[Comment] Indexeddb write error", err.message);
                     });
             });
     }

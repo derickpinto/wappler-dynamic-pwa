@@ -329,14 +329,40 @@ workbox.routing.registerRoute(
   }
 );
 
-const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin("queue", {
-  maxRetentionTime: 24 * 60, // Retry for max of 24 Hours
-});
+// const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin("queue", {
+//   maxRetentionTime: 24 * 60, // Retry for max of 24 Hours
+// });
 
-workbox.routing.registerRoute(
-  ({ url }) => url.pathname === "/api/post_data/post_new_comment",
-  new workbox.strategies.NetworkOnly({
-    plugins: [bgSyncPlugin],
-  }),
-  "POST"
-);
+// workbox.routing.registerRoute(
+//   ({ url }) => {
+//     console.log(url)
+//     return url.pathname === "/api/post_data/post_new_comment"
+//   },
+//   new workbox.strategies.NetworkOnly({
+//     plugins: [bgSyncPlugin],
+//   }),
+//   "POST"
+// );
+
+
+const queue = new workbox.backgroundSync.Queue('post-comment');
+
+self.addEventListener('fetch', (event) => {
+  // Add in your own criteria here to return early if this
+  // isn't a request that should use background sync.
+  if (event.request.method !== 'POST') {
+    return;
+  }
+
+  const bgSyncLogic = async () => {
+    try {
+      const response = await fetch(event.request.clone());
+      return response;
+    } catch (error) {
+      await queue.pushRequest({ request: event.request });
+      return error;
+    }
+  };
+
+  event.respondWith(bgSyncLogic());
+});

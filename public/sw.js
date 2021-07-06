@@ -48,6 +48,8 @@ var STATIC_FILES = [
     'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
     'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0',
 ];
+const SYNC_TAG = 'post-comment';
+const SYNC_ENABLED = 'sync' in self.registration;
 
 
 const limitCacheSize = (name, size) => {
@@ -118,47 +120,55 @@ self.addEventListener('fetch', event => {
 });
 
 
+const postOfflineData = () => {
 
-self.addEventListener('sync', function (event) {
+    console.log("[Service worker] background sync is activated");
 
-    if (event.tag === 'sync-new-comment') {
+    readAllData('sync-comments')
+        .then(function (data) {
+            setTimeout(() => {
+                Promise.all(
+                    data.map(async (dt) => {
+                        const url = "/api/post_data/post_new_comment";
+                        const parameters = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': "application/json",
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                datetime: dt.datetime,
+                                name: dt.name,
+                                url: dt.image,
+                                comment: dt.message,
+                                datetime1: dt.datetime1,
+                            })
+                        };
 
-        event.waitUntil(
-            readAllData('sync-comments')
-                .then(function (data) {
-                    setTimeout(() => {
-                        data.forEach(async (dt) => {
-                            console.log("[Indexeddb offline data]", dt);
-                            const url = "/api/post_data/post_new_comment";
-                            const parameters = {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': "application/json",
-                                    'Accept': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    datetime: dt.datetime,
-                                    name: dt.name,
-                                    url: dt.image,
-                                    comment: dt.message,
-                                    datetime1: dt.datetime1,
-                                })
-                            };
+                        fetch(url, parameters)
+                            .then((res) => {
+                                return res.json();
+                            })
+                            .then(response => {
+                                if (response && response.datetimeid) {
+                                    deleteItemFromData('sync-comments', response.datetimeid);
+                                }
+                            }).catch((error) => {
+                                console.log('[Service worker] background sync error', error.message);
+                            })
+                    })
+                );
+            }, 5000);
+        })
+}
 
-                            fetch(url, parameters)
-                                .then((res) => {
-                                    return res.json();
-                                })
-                                .then(response => {
-                                    if (response && response.datetimeid) deleteItemFromData('sync-comments', response.datetimeid);
-                                }).catch((error) => {
-                                    console.log('[error post message]', error.message);
-                                })
-                        })
-                    }, 5000);
-                })
-        );
+if ('sync' in self.registration) {
 
-    }
-});
+    self.addEventListener('sync', event => {
 
+        if (event.tag === "post-comment") {
+            event.waitUntil(postOfflineData());
+        }
+
+    })
+}
