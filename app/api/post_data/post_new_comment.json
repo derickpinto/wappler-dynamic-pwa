@@ -63,44 +63,44 @@
         "module": "dbupdater",
         "action": "insert",
         "options": {
-          "connection": "freedbtech_PWATESTING",
+          "connection": "PWATESTING",
           "sql": {
             "type": "insert",
             "values": [
               {
-                "table": "comments",
+                "table": "comment",
                 "column": "name",
                 "type": "text",
                 "value": "{{$_POST.name}}"
               },
               {
-                "table": "comments",
+                "table": "comment",
                 "column": "message",
                 "type": "text",
                 "value": "{{$_POST.comment}}"
               },
               {
-                "table": "comments",
+                "table": "comment",
                 "column": "datetime",
                 "type": "text",
                 "value": "{{$_POST.datetime}}"
               },
               {
-                "table": "comments",
-                "column": "image",
-                "type": "text",
-                "value": "{{$_POST.url}}"
-              },
-              {
-                "table": "comments",
+                "table": "comment",
                 "column": "datetime_id",
                 "type": "text",
                 "value": "{{$_POST.datetime1}}"
+              },
+              {
+                "table": "comment",
+                "column": "image",
+                "type": "text",
+                "value": "{{$_POST.url}}"
               }
             ],
-            "table": "comments",
+            "table": "comment",
             "returning": "id",
-            "query": "INSERT INTO comments\n(name, message, datetime, image, datetime_id) VALUES (:P1 /* {{$_POST.name}} */, :P2 /* {{$_POST.comment}} */, :P3 /* {{$_POST.datetime}} */, :P4 /* {{$_POST.url}} */, :P5 /* {{$_POST.datetime1}} */)",
+            "query": "INSERT INTO comment\n(name, message, datetime, datetime_id, image) VALUES (:P1 /* {{$_POST.name}} */, :P2 /* {{$_POST.comment}} */, :P3 /* {{$_POST.datetime}} */, :P4 /* {{$_POST.datetime1}} */, :P5 /* {{$_POST.url}} */)",
             "params": [
               {
                 "name": ":P1",
@@ -120,12 +120,12 @@
               {
                 "name": ":P4",
                 "type": "expression",
-                "value": "{{$_POST.url}}"
+                "value": "{{$_POST.datetime1}}"
               },
               {
                 "name": ":P5",
                 "type": "expression",
-                "value": "{{$_POST.datetime1}}"
+                "value": "{{$_POST.url}}"
               }
             ]
           }

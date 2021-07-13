@@ -1,0 +1,16 @@
+{
+  "name": "PWATESTING",
+  "module": "dbconnector",
+  "action": "connect",
+  "options": {
+    "client": "mysql",
+    "connection": {
+      "host": "remotemysql.com",
+      "port": 3306,
+      "user": "RVXDFNx7VU",
+      "password": "QEuOszNld5",
+      "database": "RVXDFNx7VU"
+    }
+  },
+  "fileName": "PWATESTING.json"
+}

@@ -17,20 +17,20 @@
       "module": "dbconnector",
       "action": "select",
       "options": {
-        "connection": "freedbtech_PWATESTING",
+        "connection": "PWATESTING",
         "sql": {
           "type": "SELECT",
           "columns": [
             {
-              "table": "comments",
+              "table": "comment",
               "column": "*"
             }
           ],
           "table": {
-            "name": "comments"
+            "name": "comment"
           },
           "joins": [],
-          "query": "SELECT *\nFROM comments\nORDER BY id DESC",
+          "query": "SELECT *\nFROM comment\nORDER BY id DESC",
           "params": [],
           "orders": [
             {
@@ -57,6 +57,10 @@
         },
         {
           "name": "datetime",
+          "type": "text"
+        },
+        {
+          "name": "datetime_id",
           "type": "text"
         },
         {

@@ -12,17 +12,5 @@ workbox.generateSW({
         "**/sw.js",
         "../generator.js"
     ],
-    swDest: "public/service-worker.js",
-    runtimeCaching: [
-        {
-            urlPattern: /\.(?:png)$/,
-            handler: "CacheFirst",
-            options: {
-                cacheName: "images",
-                expiration: {
-                    maxAgeSeconds: 1800
-                }
-            }
-        }
-    ]
+    swDest: "public/service-worker.js"
 })

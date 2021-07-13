@@ -2,14 +2,8 @@ importScripts("workbox-v6.1.5/workbox-sw.js");
 
 workbox.setConfig({
   modulePathPrefix: "/workbox-v6.1.5/",
+  debug: true,
 });
-
-// This will trigger the importScripts() for workbox.strategies and its dependencies:
-// workbox.loadModule("workbox-precaching");
-// workbox.loadModule("workbox-routing");
-// workbox.loadModule("workbox-strategies");
-// workbox.loadModule("workbox-expiration");
-// workbox.loadModule("workbox-background-sync");
 
 workbox.precaching.precacheAndRoute([
   {
@@ -101,8 +95,8 @@ workbox.precaching.precacheAndRoute([
     url: "fontawesome4/css/font-awesome.min.css",
     revision: "269550530cc127b6aa5a35925a7de6ce",
   },
-  { url: "js/app.js", revision: "63c99aa69b145cdae3c58f2cbf0f9f3f" },
-  { url: "js/comment.js", revision: "0afcd50c2c7bddb4ee3e52e038a84ffd" },
+  { url: "js/app.js", revision: "61f125903aa8129a72860407d479f019" },
+  { url: "js/comment.js", revision: "396e8b43b6226a18345e4271767e279a" },
   { url: "js/idb.js", revision: "54e4321dc8f86b9cf316a14cfdf144ab" },
   {
     url: "js/jquery-3.5.1.slim.min.js",
@@ -110,14 +104,14 @@ workbox.precaching.precacheAndRoute([
   },
   { url: "js/utility.js", revision: "a4c0922c7b75a9bbe82cfc8e22a117de" },
   { url: "manifest.json", revision: "5db71bdfbc3139823235305fb6fa6718" },
-  { url: "sw-base.js", revision: "d41d8cd98f00b204e9800998ecf8427e" },
+  { url: "sw-base.js", revision: "c63cd06f1d89b0de48df704ab7fe365c" },
   {
     url: "workbox-v6.1.5/workbox-background-sync.dev.js",
     revision: "c667009e788d90f4e6e0c77e0df1683d",
   },
   {
     url: "workbox-v6.1.5/workbox-background-sync.prod.js",
-    revision: "6ef7e65ae2c7a38747bb50618e45e3f1",
+    revision: "0a9249e7322afd36d8d79e1e0f64875f",
   },
   {
     url: "workbox-v6.1.5/workbox-broadcast-update.dev.js",
@@ -229,13 +223,14 @@ workbox.precaching.precacheAndRoute([
   },
 ]);
 
+// Demonstrates a custom cache name for a route.
 workbox.routing.registerRoute(
-  /\.(?:png|jpg|jpeg|svg)$/,
+  new RegExp('.*\\.(?:png|jpg|jpeg|svg|gif)'),
   new workbox.strategies.CacheFirst({
-    cacheName: "images",
+    cacheName: 'image-cache',
     plugins: [
       new workbox.expiration.ExpirationPlugin({
-        maxEntries: 50,
+        maxEntries: 3,
       }),
     ],
   })
@@ -317,7 +312,6 @@ workbox.routing.registerRoute(
           fetch(args.event.request).then((fetchRes) => {
             return caches.open("dynamic").then((cache) => {
               cache.put(args.event.request.url, fetchRes.clone());
-              limitCacheSize(CACHE_DYNAMIC_NAME, 15);
               return fetchRes;
             });
           })
@@ -329,13 +323,12 @@ workbox.routing.registerRoute(
   }
 );
 
-// const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin("queue", {
+// const queue = new workbox.backgroundSync.BackgroundSyncPlugin("post-comment", {
 //   maxRetentionTime: 24 * 60, // Retry for max of 24 Hours
 // });
 
 // workbox.routing.registerRoute(
 //   ({ url }) => {
-//     console.log(url)
 //     return url.pathname === "/api/post_data/post_new_comment"
 //   },
 //   new workbox.strategies.NetworkOnly({
@@ -345,24 +338,49 @@ workbox.routing.registerRoute(
 // );
 
 
-const queue = new workbox.backgroundSync.Queue('post-comment');
+const notificate = (title, message) => {
+  self.registration.showNotification(title, {
+    body: message,
+    icon: '/image.png',
+    tag: 'service-worker'
+  })
+}
 
-self.addEventListener('fetch', (event) => {
-  // Add in your own criteria here to return early if this
-  // isn't a request that should use background sync.
-  if (event.request.method !== 'POST') {
-    return;
-  }
-
-  const bgSyncLogic = async () => {
-    try {
-      const response = await fetch(event.request.clone());
-      return response;
-    } catch (error) {
-      await queue.pushRequest({ request: event.request });
-      return error;
+// let's create our queue
+const queue = new workbox.backgroundSync.Queue('post-comment', {
+  callbacks: {
+    requestWillEnqueue: () => {
+      notificate('You are offline! 🛠', 'Your request has been submitted to the Offline queue.The queue will sync with the server once you are back online.')
     }
-  };
-
-  event.respondWith(bgSyncLogic());
+  }
 });
+
+// sync event handler
+self.addEventListener("sync", (ev) => {
+  queue.replayRequests().then((a) => {
+    notificate('Syncing Application... 💾', 'Any pending requests will be sent to the server.');
+  }).catch(
+    notificate('We could not submit your requests. ❌', 'Please hit the \'Sync Pending Requests\' button when you regain internet connection.')
+  );
+});
+// const queue = new workbox.backgroundSync.Queue("post-comment");
+
+// self.addEventListener("fetch", (event) => {
+//   // Add in your own criteria here to return early if this
+//   // isn't a request that should use background sync.
+//   if (event.request.method !== "POST") {
+//     return;
+//   }
+
+//   const bgSyncLogic = async () => {
+//     try {
+//       const response = await fetch(event.request.clone());
+//       return response;
+//     } catch (error) {
+//       await queue.pushRequest({ request: event.request });
+//       return error;
+//     }
+//   };
+
+//   event.respondWith(bgSyncLogic());
+// });
