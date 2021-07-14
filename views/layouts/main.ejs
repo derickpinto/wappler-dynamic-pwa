@@ -45,14 +45,24 @@
   <script src="/dmxAppConnect/dmxDatastore/dmxDatastore.js" defer=""></script>
   <script src="/dmxAppConnect/dmxDataTraversal/dmxDataTraversal.js" defer=""></script>
   <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    window.OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "aca682ee-3a48-41a5-b5db-7f3a7f543102",
+    });
+  });
+  </script>
 </head>
 
 <body is="dmx-app" id="main">
   <div is="dmx-view" id="content">
     <%- await include(content, locals); %>
   </div>
-  <p class="paragraph">version: 2.1</p>
-  <script src="/bootstrap/4/js/popper.min.js"></script>
+  <p class="paragraph">version: 2.2</p>
+  <script src="/bootstrap/4/js/popper.min.js">
+  </script>
   <script src="/bootstrap/4/js/bootstrap.min.js"></script>
   <script src="/js/idb.js"></script>
   <script src="/js/utility.js"></script>
@@ -60,10 +70,6 @@
   <script src="/js/comment.js"></script>
 
 
-  <!-- start webpushr code -->
-  <script>
-    (function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BDNJ2CIDu2sO_nurUQO7anVQpF1i1YkxljLskfrIPORSFk0r6l_gFN-FblYo-RR65vvpnOKTibZRTCY8Z3cT0cw' ,'integration':'popup' });
-  </script><!-- end webpushr code -->
 </body>
 
 </html>

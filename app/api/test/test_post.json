@@ -1,3 +1,21 @@
 {
-  "exec": {}
+  "name": "webpushr",
+  "module": "api",
+  "action": "send",
+  "options": {
+    "url": "https://api.webpushr.com/v1/notification/send/all",
+    "method": "POST",
+    "dataType": "json",
+    "data": {
+      "title": "This is a test from rest api",
+      "message": "This is a test from rest api",
+      "target_url": "https://google.com"
+    },
+    "headers": {
+      "\"Content-Type\"": "\"application/json\"",
+      "webpushrKey": "26757cae4dd6ce386bcadc5faf024888",
+      "webpushrAuthToken": "33094"
+    }
+  },
+  "output": true
 }

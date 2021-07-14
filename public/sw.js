@@ -46,6 +46,7 @@ var STATIC_FILES = [
   "https://js.stripe.com/v3/",
   "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
   "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0",
+  "https://cdn.onesignal.com/sdks/OneSignalSDK.js"
 ];
 const SYNC_TAG = "post-comment";
 const SYNC_ENABLED = "sync" in self.registration;
