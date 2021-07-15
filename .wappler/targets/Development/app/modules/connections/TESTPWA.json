@@ -1,0 +1,16 @@
+{
+  "name": "TESTPWA",
+  "module": "dbconnector",
+  "action": "connect",
+  "options": {
+    "client": "mysql",
+    "connection": {
+      "host": "sql6.freemysqlhosting.net",
+      "port": 3306,
+      "user": "sql6425394",
+      "password": "r3atelmsCz",
+      "database": "sql6425394"
+    }
+  },
+  "fileName": "TESTPWA.json"
+}

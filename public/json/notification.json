@@ -1,0 +1,11 @@
+{
+    "body": {
+        "included_segments": [
+            "All"
+        ],
+        "excluded_segments": [],
+        "app_id": "62cac639-cfe8-4ddb-8bff-c691dc5ac7e4",
+        "content_available": true,
+        "template_id": "931e7daf-6465-4661-b8ab-f1120b258c34"
+    }
+}

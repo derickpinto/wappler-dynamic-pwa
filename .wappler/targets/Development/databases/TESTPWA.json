@@ -1,0 +1,72 @@
+{
+  "type": "mysql",
+  "connection": {
+    "host": "sql6.freemysqlhosting.net",
+    "port": 3306,
+    "user": "sql6425394",
+    "password": "r3atelmsCz",
+    "database": "sql6425394"
+  },
+  "direct": true,
+  "schema": {
+    "tables": {
+      "comment": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "sql6425394",
+          "collation": "latin1_swedish_ci"
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "name": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "message": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "image": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "datetime": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "datetime_id": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        }
+      }
+    },
+    "views": {}
+  }
+}

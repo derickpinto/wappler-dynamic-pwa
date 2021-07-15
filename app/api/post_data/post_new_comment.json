@@ -63,7 +63,7 @@
         "module": "dbupdater",
         "action": "insert",
         "options": {
-          "connection": "PWATESTING",
+          "connection": "TESTPWA",
           "sql": {
             "type": "insert",
             "values": [
@@ -81,6 +81,12 @@
               },
               {
                 "table": "comment",
+                "column": "image",
+                "type": "text",
+                "value": "{{$_POST.url}}"
+              },
+              {
+                "table": "comment",
                 "column": "datetime",
                 "type": "text",
                 "value": "{{$_POST.datetime}}"
@@ -90,17 +96,11 @@
                 "column": "datetime_id",
                 "type": "text",
                 "value": "{{$_POST.datetime1}}"
-              },
-              {
-                "table": "comment",
-                "column": "image",
-                "type": "text",
-                "value": "{{$_POST.url}}"
               }
             ],
             "table": "comment",
             "returning": "id",
-            "query": "INSERT INTO comment\n(name, message, datetime, datetime_id, image) VALUES (:P1 /* {{$_POST.name}} */, :P2 /* {{$_POST.comment}} */, :P3 /* {{$_POST.datetime}} */, :P4 /* {{$_POST.datetime1}} */, :P5 /* {{$_POST.url}} */)",
+            "query": "INSERT INTO comment\n(name, message, image, datetime, datetime_id) VALUES (:P1 /* {{$_POST.name}} */, :P2 /* {{$_POST.comment}} */, :P3 /* {{$_POST.url}} */, :P4 /* {{$_POST.datetime}} */, :P5 /* {{$_POST.datetime1}} */)",
             "params": [
               {
                 "name": ":P1",
@@ -115,17 +115,17 @@
               {
                 "name": ":P3",
                 "type": "expression",
-                "value": "{{$_POST.datetime}}"
+                "value": "{{$_POST.url}}"
               },
               {
                 "name": ":P4",
                 "type": "expression",
-                "value": "{{$_POST.datetime1}}"
+                "value": "{{$_POST.datetime}}"
               },
               {
                 "name": ":P5",
                 "type": "expression",
-                "value": "{{$_POST.url}}"
+                "value": "{{$_POST.datetime1}}"
               }
             ]
           }
@@ -148,6 +148,30 @@
         "action": "setvalue",
         "options": {
           "value": "{{$_POST.datetime1}}"
+        },
+        "output": true
+      },
+      {
+        "name": "OneSignal",
+        "module": "api",
+        "action": "send",
+        "options": {
+          "url": "https://onesignal.com/api/v1/notifications",
+          "method": "POST",
+          "dataType": "json",
+          "data": {
+            "included_segments": [
+              "All"
+            ],
+            "excluded_segments": [],
+            "app_id": "62cac639-cfe8-4ddb-8bff-c691dc5ac7e4",
+            "content_available": true,
+            "template_id": "803036f0-74f0-4642-a696-f3ed9ff47c0d"
+          },
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Basic ODJhZTFlNjQtZmEyYi00YjhjLTgzOGQtZmRhZWUwNmQ4M2Nm"
+          }
         },
         "output": true
       },
@@ -182,7 +206,8 @@
             "name": "headers"
           }
         ],
-        "outputType": "object"
+        "outputType": "object",
+        "disabled": true
       }
     ]
   }

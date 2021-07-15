@@ -17,7 +17,7 @@
       "module": "dbconnector",
       "action": "select",
       "options": {
-        "connection": "PWATESTING",
+        "connection": "TESTPWA",
         "sql": {
           "type": "SELECT",
           "columns": [
@@ -56,15 +56,15 @@
           "type": "text"
         },
         {
+          "name": "image",
+          "type": "text"
+        },
+        {
           "name": "datetime",
           "type": "text"
         },
         {
           "name": "datetime_id",
-          "type": "text"
-        },
-        {
-          "name": "image",
           "type": "text"
         }
       ],
