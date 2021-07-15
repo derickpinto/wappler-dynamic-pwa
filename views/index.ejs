@@ -6,7 +6,6 @@
 <dmx-datetime id="datetimepicker" utc="true"></dmx-datetime>
 
 <dmx-serverconnect id="fetch_all_comments" url="/api/get_data/all_comments" dmx-on:success="index_local.set('get_comment',fetch_all_comments.data.get_all_comments)"></dmx-serverconnect>
-<dmx-serverconnect id="test" url="/api/test/test_post" dmx-on:success="index_local.set('get_comment',fetch_all_comments.data.get_all_comments)"></dmx-serverconnect>
 
 <div class="modal" id="add_comment_modal" is="dmx-bs4-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
