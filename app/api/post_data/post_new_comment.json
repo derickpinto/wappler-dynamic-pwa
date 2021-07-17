@@ -4,6 +4,16 @@
       "linkedFile": "/views/index.ejs",
       "linkedForm": "comment_form"
     },
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ],
     "$_POST": [
       {
         "type": "text",
@@ -173,7 +183,8 @@
             "Authorization": "Basic ODJhZTFlNjQtZmEyYi00YjhjLTgzOGQtZmRhZWUwNmQ4M2Nm"
           }
         },
-        "output": true
+        "output": true,
+        "disabled": true
       },
       {
         "name": "webpushr",
@@ -208,6 +219,102 @@
         ],
         "outputType": "object",
         "disabled": true
+      },
+      {
+        "name": "",
+        "module": "core",
+        "action": "condition",
+        "options": {
+          "if": "{{datetimeid}}",
+          "then": {
+            "steps": [
+              {
+                "name": "fetch_all_subscribers",
+                "module": "dbconnector",
+                "action": "select",
+                "options": {
+                  "connection": "TESTPWA",
+                  "sql": {
+                    "type": "SELECT",
+                    "columns": [
+                      {
+                        "table": "subscription",
+                        "column": "*"
+                      }
+                    ],
+                    "table": {
+                      "name": "subscription"
+                    },
+                    "joins": [],
+                    "query": "SELECT *\nFROM subscription",
+                    "params": []
+                  }
+                },
+                "meta": [
+                  {
+                    "name": "id",
+                    "type": "text"
+                  },
+                  {
+                    "name": "endpoint",
+                    "type": "text"
+                  },
+                  {
+                    "name": "authKey",
+                    "type": "text"
+                  },
+                  {
+                    "name": "p256dh",
+                    "type": "text"
+                  }
+                ],
+                "outputType": "array",
+                "output": true
+              },
+              {
+                "name": "all_notification_subscribers",
+                "module": "core",
+                "action": "setvalue",
+                "options": {
+                  "value": "{{fetch_all_subscribers}}"
+                },
+                "disabled": true
+              },
+              {
+                "name": "",
+                "module": "core",
+                "action": "condition",
+                "options": {
+                  "if": "{{fetch_all_subscribers.length}}",
+                  "then": {
+                    "steps": {
+                      "name": "api",
+                      "module": "api",
+                      "action": "send",
+                      "options": {
+                        "url": "https://pwa-notification-api.herokuapp.com/api/webpush",
+                        "method": "POST",
+                        "data": {
+                          "mail": "derickpinto12@gmail.com",
+                          "publicKey": "BM8twj8dS1TAZMFGU2OHcJ32UEO7XBQnKrbBO5jYLByToAyG_DgIOdc9jwBmz4orzSYzThNoy8m2JVQ-Q_QufS0",
+                          "privateKey": "fDES_2AX_-YbP8Qp7govFBkkFEFCVyeLPaky5Co8Ptc",
+                          "users": "{{fetch_all_subscribers}}"
+                        },
+                        "headers": {
+                          "Content-Type": "application/json"
+                        },
+                        "dataType": "json"
+                      },
+                      "output": true
+                    }
+                  }
+                },
+                "outputType": "boolean"
+              }
+            ]
+          }
+        },
+        "outputType": "boolean"
       }
     ]
   }

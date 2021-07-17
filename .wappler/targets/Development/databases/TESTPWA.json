@@ -10,6 +10,46 @@
   "direct": true,
   "schema": {
     "tables": {
+      "subscription": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "sql6425394",
+          "collation": "latin1_swedish_ci"
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "endpoint": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "authKey": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          },
+          "p256dh": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": true
+            }
+          }
+        }
+      },
       "comment": {
         "db": {
           "engine": "InnoDB",

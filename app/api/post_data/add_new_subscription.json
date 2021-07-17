@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "endpoint"
+      },
+      {
+        "type": "text",
+        "name": "authKey"
+      },
+      {
+        "type": "text",
+        "name": "p256dh"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "insert_subscriber",
+      "module": "dbupdater",
+      "action": "insert",
+      "options": {
+        "connection": "TESTPWA",
+        "sql": {
+          "type": "insert",
+          "values": [
+            {
+              "table": "subscription",
+              "column": "endpoint",
+              "type": "text",
+              "value": "{{$_POST.endpoint}}"
+            },
+            {
+              "table": "subscription",
+              "column": "authKey",
+              "type": "text",
+              "value": "{{$_POST.authKey}}"
+            },
+            {
+              "table": "subscription",
+              "column": "p256dh",
+              "type": "text",
+              "value": "{{$_POST.p256dh}}"
+            }
+          ],
+          "table": "subscription",
+          "returning": "id",
+          "query": "INSERT INTO subscription\n(endpoint, authKey, p256dh) VALUES (:P1 /* {{$_POST.endpoint}} */, :P2 /* {{$_POST.authKey}} */, :P3 /* {{$_POST.p256dh}} */)",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.endpoint}}"
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.authKey}}"
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.p256dh}}"
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "identity",
+          "type": "text"
+        },
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}
