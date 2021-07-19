@@ -148,3 +148,24 @@ input{
 .no-comments {
     height: 300px;
 }
+
+.floating-notification{
+    display: -ms-flexbox;
+    display: none;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 100px;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    -webkit-box-shadow: 0rem 0rem 1rem rgba(0,0,0,0.5);
+            box-shadow: 0rem 0rem 1rem rgba(0,0,0,0.5);
+}

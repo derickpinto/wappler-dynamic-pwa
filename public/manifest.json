@@ -11,17 +11,17 @@
     "orientation": "any",
     "icons": [
         {
-            "src": "/assets/icons/icon-48.png",
+            "src": "/assets/icon/icon-48.png",
             "type": "image/png",
             "sizes": "48x48"
         },
         {
-            "src": "/assets/icons/icon-256.png",
+            "src": "/assets/icon/icon-256.png",
             "type": "image/png",
             "sizes": "256x256"
         },
         {
-            "src": "/assets/icons/icon-512.png",
+            "src": "/assets/icon/icon-512.png",
             "type": "image/png",
             "sizes": "512x512",
             "purpose": "any maskable"

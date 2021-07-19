@@ -1,8 +1,10 @@
+const notificationButton = document.querySelector(".floating-notification");
+
 
 if ('serviceWorker' in navigator) {
     // Use the window load event to keep the page load performant
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('/sw-base.js')
             .then(function () {
                 console.log('Service worker is registered');
             })
@@ -115,7 +117,7 @@ function configurePushSub() {
 }
 
 
-if ('Notification' in window && 'serviceWorker' in navigator) {
+function askForNotificationPermission() {
     Notification.requestPermission(function (result) {
 
         if (result !== 'granted') {
@@ -125,4 +127,12 @@ if ('Notification' in window && 'serviceWorker' in navigator) {
             // displayConfirmNotification();
         }
     });
+}
+
+if ('Notification' in window && 'serviceWorker' in navigator) {
+    notificationButton.style.display = "flex";
+    notificationButton.addEventListener(
+        "click",
+        askForNotificationPermission
+    );
 }

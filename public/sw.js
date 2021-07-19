@@ -2,8 +2,8 @@ importScripts("/js/idb.js");
 importScripts("/js/utility.js");
 importScripts("/push/OneSignalSDKWorker.js")
 
-var CACHE_STATIC_NAME = "static-v1.0.40";
-var CACHE_DYNAMIC_NAME = "dynamic-v1.0.17";
+var CACHE_STATIC_NAME = "static-v1.0.41";
+var CACHE_DYNAMIC_NAME = "dynamic-v1.0.18";
 var STATIC_FILES = [
     "/",
     "/offline",
@@ -103,7 +103,8 @@ function isInArray(string, array) {
 }
 
 self.addEventListener("fetch", (event) => {
-    if (event.request.url.indexOf("/api/") === -1) {
+    console.log(event.request.url.indexOf("/api") === -1);
+    if (event.request.url.indexOf("/api") === -1) {
         event.respondWith(
             caches
                 .match(event.request)
@@ -113,7 +114,7 @@ self.addEventListener("fetch", (event) => {
                         fetch(event.request).then((fetchRes) => {
                             return caches.open(CACHE_DYNAMIC_NAME).then((cache) => {
                                 cache.put(event.request.url, fetchRes.clone());
-                                // limitCacheSize(CACHE_DYNAMIC_NAME, 15);
+                                limitCacheSize(CACHE_DYNAMIC_NAME, 15);
                                 return fetchRes;
                             });
                         })
@@ -187,7 +188,9 @@ self.addEventListener("sync", (event) => {
 
 self.addEventListener('push', function (event) {
 
-    var data = { title: 'New!', content: 'Something new happened!', openUrl: '/' };
+    console.log("Push event received", event);
+
+    var data = { title: 'New!', content: 'Something new happened!', openUrl: 'https://wappler-dynamic-pwa.herokuapp.com' };
 
     if (event.data) {
         data = JSON.parse(event.data.text());

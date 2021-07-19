@@ -162,65 +162,6 @@
         "output": true
       },
       {
-        "name": "OneSignal",
-        "module": "api",
-        "action": "send",
-        "options": {
-          "url": "https://onesignal.com/api/v1/notifications",
-          "method": "POST",
-          "dataType": "json",
-          "data": {
-            "included_segments": [
-              "All"
-            ],
-            "excluded_segments": [],
-            "app_id": "aca682ee-3a48-41a5-b5db-7f3a7f543102",
-            "content_available": true,
-            "template_id": "803036f0-74f0-4642-a696-f3ed9ff47c0d"
-          },
-          "headers": {
-            "Content-Type": "application/json",
-            "Authorization": "Basic ODJhZTFlNjQtZmEyYi00YjhjLTgzOGQtZmRhZWUwNmQ4M2Nm"
-          }
-        },
-        "output": true,
-        "disabled": true
-      },
-      {
-        "name": "webpushr",
-        "module": "api",
-        "action": "send",
-        "options": {
-          "url": "https://api.webpushr.com/v1/notification/send/all",
-          "method": "POST",
-          "dataType": "json",
-          "data": {
-            "title": "This is a test from rest api",
-            "message": "This is a test from rest api",
-            "target_url": "https://google.com"
-          },
-          "headers": {
-            "\"Content-Type\"": "\"application/json\"",
-            "\"webpushrKey\"": "\"26757cae4dd6ce386bcadc5faf024888\"",
-            "\"webpushrAuthToken\"": "\"33094\""
-          },
-          "schema": []
-        },
-        "output": true,
-        "meta": [
-          {
-            "type": "array",
-            "name": "data"
-          },
-          {
-            "type": "object",
-            "name": "headers"
-          }
-        ],
-        "outputType": "object",
-        "disabled": true
-      },
-      {
         "name": "",
         "module": "core",
         "action": "condition",
@@ -272,15 +213,6 @@
                 "output": true
               },
               {
-                "name": "all_notification_subscribers",
-                "module": "core",
-                "action": "setvalue",
-                "options": {
-                  "value": "{{fetch_all_subscribers}}"
-                },
-                "disabled": true
-              },
-              {
                 "name": "",
                 "module": "core",
                 "action": "condition",
@@ -305,7 +237,7 @@
                         },
                         "dataType": "json"
                       },
-                      "output": true
+                      "output": false
                     }
                   }
                 },

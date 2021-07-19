@@ -4,8 +4,7 @@ workbox.generateSW({
     cacheId: "pwa_comment",
     globDirectory: "public/",
     globPatterns: [
-        "**/*.{css,js,json}",
-        "assets/icon/*.{png}",
+        "**/*.{css,js,json,png}",
     ],
     globIgnores: [
         "**/service-worker.js",
