@@ -11,7 +11,6 @@ const networkUrls = [
 ];
 
 workbox.setConfig({
-    modulePathPrefix: "/workbox-v6.1.5/",
     debug: false,
 });
 
