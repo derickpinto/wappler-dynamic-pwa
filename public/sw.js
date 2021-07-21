@@ -1,6 +1,5 @@
 importScripts("/js/idb.js");
 importScripts("/js/utility.js");
-importScripts("/push/OneSignalSDKWorker.js")
 
 var CACHE_STATIC_NAME = "static-v1.0.41";
 var CACHE_DYNAMIC_NAME = "dynamic-v1.0.18";
@@ -48,8 +47,6 @@ var STATIC_FILES = [
     "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
     "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0",
 ];
-const SYNC_TAG = "post-comment";
-const SYNC_ENABLED = "sync" in self.registration;
 
 const limitCacheSize = (name, size) => {
     caches.open(name).then((cache) => {
@@ -102,30 +99,24 @@ function isInArray(string, array) {
     return array.indexOf(cachePath) > -1;
 }
 
-self.addEventListener("fetch", (event) => {
-    console.log(event.request.url.indexOf("/api") === -1);
-    if (event.request.url.indexOf("/api") === -1) {
-        event.respondWith(
-            caches
-                .match(event.request)
-                .then((cacheRes) => {
-                    return (
-                        cacheRes ||
-                        fetch(event.request).then((fetchRes) => {
-                            return caches.open(CACHE_DYNAMIC_NAME).then((cache) => {
-                                cache.put(event.request.url, fetchRes.clone());
-                                limitCacheSize(CACHE_DYNAMIC_NAME, 15);
-                                return fetchRes;
-                            });
-                        })
-                    );
+// fetch event
+self.addEventListener('fetch', evt => {
+    //console.log('fetch event', evt);
+    evt.respondWith(
+        caches.match(evt.request).then(cacheRes => {
+            return cacheRes || fetch(evt.request).then(fetchRes => {
+                return caches.open(CACHE_DYNAMIC_NAME).then(cache => {
+                    cache.put(evt.request.url, fetchRes.clone());
+                    // check cached items size
+                    limitCacheSize(CACHE_DYNAMIC_NAME, 15);
+                    return fetchRes;
                 })
-                .catch((error) => {
-                    console.log("[Service worker] Fetche error", error.message);
-                    return caches.match("/offline");
-                })
-        );
-    }
+            });
+        }).catch((error) => {
+            console.log(error.message)
+            return caches.match('/offline');
+        })
+    );
 });
 
 const postOfflineData = () => {

@@ -1,6 +1,5 @@
 const notificationButton = document.querySelector(".floating-notification");
 
-
 if ('serviceWorker' in navigator) {
     // Use the window load event to keep the page load performant
     window.addEventListener('load', () => {
@@ -62,7 +61,6 @@ function urlBase64ToUint8Array(base64String) {
 
 
 function configurePushSub() {
-    console.log("1")
     if (!('serviceWorker' in navigator)) {
         return;
     }
@@ -130,9 +128,11 @@ function askForNotificationPermission() {
 }
 
 if ('Notification' in window && 'serviceWorker' in navigator) {
-    notificationButton.style.display = "flex";
-    notificationButton.addEventListener(
-        "click",
-        askForNotificationPermission
-    );
+    if (notificationButton) {
+        notificationButton.style.display = "flex";
+        notificationButton.addEventListener(
+            "click",
+            askForNotificationPermission
+        );
+    }
 }
