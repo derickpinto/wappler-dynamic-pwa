@@ -16,66 +16,82 @@
     ]
   },
   "exec": {
-    "steps": {
-      "name": "insert_subscriber",
-      "module": "dbupdater",
-      "action": "insert",
-      "options": {
-        "connection": "TESTPWA",
-        "sql": {
-          "type": "insert",
-          "values": [
-            {
-              "table": "subscription",
-              "column": "endpoint",
-              "type": "text",
-              "value": "{{$_POST.endpoint}}"
-            },
-            {
-              "table": "subscription",
-              "column": "authKey",
-              "type": "text",
-              "value": "{{$_POST.authKey}}"
-            },
-            {
-              "table": "subscription",
-              "column": "p256dh",
-              "type": "text",
-              "value": "{{$_POST.p256dh}}"
-            }
-          ],
-          "table": "subscription",
-          "returning": "id",
-          "query": "INSERT INTO subscription\n(endpoint, authKey, p256dh) VALUES (:P1 /* {{$_POST.endpoint}} */, :P2 /* {{$_POST.authKey}} */, :P3 /* {{$_POST.p256dh}} */)",
-          "params": [
-            {
-              "name": ":P1",
-              "type": "expression",
-              "value": "{{$_POST.endpoint}}"
-            },
-            {
-              "name": ":P2",
-              "type": "expression",
-              "value": "{{$_POST.authKey}}"
-            },
-            {
-              "name": ":P3",
-              "type": "expression",
-              "value": "{{$_POST.p256dh}}"
-            }
-          ]
-        }
-      },
-      "meta": [
-        {
-          "name": "identity",
-          "type": "text"
+    "steps": [
+      {
+        "name": "insert_subscriber",
+        "module": "dbupdater",
+        "action": "insert",
+        "options": {
+          "connection": "REMOTEDATABASE",
+          "sql": {
+            "type": "insert",
+            "values": [
+              {
+                "table": "subscriptions",
+                "column": "endpoint",
+                "type": "text",
+                "value": "{{$_POST.endpoint}}"
+              },
+              {
+                "table": "subscriptions",
+                "column": "authKey",
+                "type": "text",
+                "value": "{{$_POST.authKey}}"
+              },
+              {
+                "table": "subscriptions",
+                "column": "p256dh",
+                "type": "text",
+                "value": "{{$_POST.p256dh}}"
+              }
+            ],
+            "table": "subscriptions",
+            "returning": "id",
+            "query": "INSERT INTO subscriptions\n(endpoint, authKey, p256dh) VALUES (:P1 /* {{$_POST.endpoint}} */, :P2 /* {{$_POST.authKey}} */, :P3 /* {{$_POST.p256dh}} */)",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.endpoint}}"
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.authKey}}"
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.p256dh}}"
+              }
+            ]
+          }
         },
-        {
-          "name": "affected",
-          "type": "number"
+        "meta": [
+          {
+            "name": "identity",
+            "type": "text"
+          },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "",
+        "module": "mail",
+        "action": "send",
+        "options": {
+          "instance": "subscription_mail",
+          "subject": "Thank you for subscribing to PWA Comments notification.",
+          "fromName": "Derick Jeson Pinto",
+          "fromEmail": "derickpinto12@gmail.com",
+          "toName": "Derick Jeson Pinto",
+          "toEmail": "derickpinto37@gmail.com",
+          "body": "Welcom to PWA comments"
         }
-      ]
-    }
+      }
+    ]
   }
 }

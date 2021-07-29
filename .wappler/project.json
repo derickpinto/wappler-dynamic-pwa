@@ -26,7 +26,7 @@
   "targets": [
     {
       "name": "Development",
-      "remoteURL": "http://localhost:3000/",
+      "remoteURL": "http://localhost:3000",
       "access": "local"
     },
     {
@@ -41,9 +41,9 @@
   "activeTarget": "Development",
   "projectType": "web",
   "projectLinksType": "site",
-  "npmInstall": true,
   "firebaseProjectID": "dynamic-pwa",
   "routingHandler": "node",
   "projectServerModel": "node",
-  "useRouting": true
+  "useRouting": true,
+  "npmInstall": true
 }

@@ -73,7 +73,7 @@
         "module": "dbupdater",
         "action": "insert",
         "options": {
-          "connection": "TESTPWA",
+          "connection": "REMOTEDATABASE",
           "sql": {
             "type": "insert",
             "values": [
@@ -91,12 +91,6 @@
               },
               {
                 "table": "comment",
-                "column": "image",
-                "type": "text",
-                "value": "{{$_POST.url}}"
-              },
-              {
-                "table": "comment",
                 "column": "datetime",
                 "type": "text",
                 "value": "{{$_POST.datetime}}"
@@ -106,11 +100,17 @@
                 "column": "datetime_id",
                 "type": "text",
                 "value": "{{$_POST.datetime1}}"
+              },
+              {
+                "table": "comment",
+                "column": "image",
+                "type": "text",
+                "value": "{{$_POST.url}}"
               }
             ],
             "table": "comment",
             "returning": "id",
-            "query": "INSERT INTO comment\n(name, message, image, datetime, datetime_id) VALUES (:P1 /* {{$_POST.name}} */, :P2 /* {{$_POST.comment}} */, :P3 /* {{$_POST.url}} */, :P4 /* {{$_POST.datetime}} */, :P5 /* {{$_POST.datetime1}} */)",
+            "query": "INSERT INTO comment\n(name, message, datetime, datetime_id, image) VALUES (:P1 /* {{$_POST.name}} */, :P2 /* {{$_POST.comment}} */, :P3 /* {{$_POST.datetime}} */, :P4 /* {{$_POST.datetime1}} */, :P5 /* {{$_POST.url}} */)",
             "params": [
               {
                 "name": ":P1",
@@ -125,17 +125,17 @@
               {
                 "name": ":P3",
                 "type": "expression",
-                "value": "{{$_POST.url}}"
+                "value": "{{$_POST.datetime}}"
               },
               {
                 "name": ":P4",
                 "type": "expression",
-                "value": "{{$_POST.datetime}}"
+                "value": "{{$_POST.datetime1}}"
               },
               {
                 "name": ":P5",
                 "type": "expression",
-                "value": "{{$_POST.datetime1}}"
+                "value": "{{$_POST.url}}"
               }
             ]
           }
@@ -174,20 +174,40 @@
                 "module": "dbconnector",
                 "action": "select",
                 "options": {
-                  "connection": "TESTPWA",
+                  "connection": "REMOTEDATABASE",
                   "sql": {
                     "type": "SELECT",
                     "columns": [
                       {
-                        "table": "subscription",
-                        "column": "*"
+                        "table": "comment",
+                        "column": "id"
+                      },
+                      {
+                        "table": "comment",
+                        "column": "name"
+                      },
+                      {
+                        "table": "comment",
+                        "column": "message"
+                      },
+                      {
+                        "table": "comment",
+                        "column": "datetime"
+                      },
+                      {
+                        "table": "comment",
+                        "column": "datetime_id"
+                      },
+                      {
+                        "table": "comment",
+                        "column": "image"
                       }
                     ],
                     "table": {
-                      "name": "subscription"
+                      "name": "comment"
                     },
                     "joins": [],
-                    "query": "SELECT *\nFROM subscription",
+                    "query": "SELECT id, name, message, datetime, datetime_id, image\nFROM comment",
                     "params": []
                   }
                 },
@@ -197,15 +217,23 @@
                     "type": "text"
                   },
                   {
-                    "name": "endpoint",
+                    "name": "name",
                     "type": "text"
                   },
                   {
-                    "name": "authKey",
+                    "name": "message",
                     "type": "text"
                   },
                   {
-                    "name": "p256dh",
+                    "name": "datetime",
+                    "type": "text"
+                  },
+                  {
+                    "name": "datetime_id",
+                    "type": "text"
+                  },
+                  {
+                    "name": "image",
                     "type": "text"
                   }
                 ],

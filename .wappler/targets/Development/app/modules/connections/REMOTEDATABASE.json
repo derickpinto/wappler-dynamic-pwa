@@ -1,0 +1,15 @@
+{
+  "name": "REMOTEDATABASE",
+  "module": "dbconnector",
+  "action": "connect",
+  "options": {
+    "client": "mysql",
+    "connection": {
+      "host": "remotemysql.com",
+      "user": "RVXDFNx7VU",
+      "password": "0F7alkCvHd",
+      "database": "RVXDFNx7VU"
+    }
+  },
+  "fileName": "REMOTEDATABASE.json"
+}

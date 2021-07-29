@@ -62,9 +62,14 @@
     }); -->
     <!-- </script> -->
 
+    <script src="/dmxAppConnect/dmxBrowser/dmxBrowser.js" defer=""></script>
 </head>
 
 <body is="dmx-app" id="main">
+    <div is="dmx-browser" id="browser1"></div>
+    <div class="browser_support">
+        <p id="browserSupport">Please use a different browser</p>
+    </div>
     <div is="dmx-view" id="content">
         <%- await include(content, locals); %>
     </div>

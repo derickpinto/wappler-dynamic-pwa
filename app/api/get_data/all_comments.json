@@ -17,26 +17,51 @@
       "module": "dbconnector",
       "action": "select",
       "options": {
-        "connection": "TESTPWA",
+        "connection": "REMOTEDATABASE",
         "sql": {
           "type": "SELECT",
           "columns": [
             {
               "table": "comment",
               "column": "*"
+            },
+            {
+              "table": "comment",
+              "column": "id"
+            },
+            {
+              "table": "comment",
+              "column": "name"
+            },
+            {
+              "table": "comment",
+              "column": "message"
+            },
+            {
+              "table": "comment",
+              "column": "datetime"
+            },
+            {
+              "table": "comment",
+              "column": "datetime_id"
+            },
+            {
+              "table": "comment",
+              "column": "image"
             }
           ],
           "table": {
             "name": "comment"
           },
           "joins": [],
-          "query": "SELECT *\nFROM comment\nORDER BY id DESC",
+          "query": "SELECT *, id, name, message, datetime, datetime_id, image\nFROM comment\nORDER BY id DESC",
           "params": [],
           "orders": [
             {
               "table": "comments",
               "column": "id",
-              "direction": "DESC"
+              "direction": "DESC",
+              "recid": 1
             }
           ]
         }
@@ -56,15 +81,15 @@
           "type": "text"
         },
         {
-          "name": "image",
-          "type": "text"
-        },
-        {
           "name": "datetime",
           "type": "text"
         },
         {
           "name": "datetime_id",
+          "type": "text"
+        },
+        {
+          "name": "image",
           "type": "text"
         }
       ],

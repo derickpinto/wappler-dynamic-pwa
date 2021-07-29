@@ -1,8 +1,32 @@
+
 const notificationButton = document.querySelector(".floating-notification");
+const browserSupport = document.querySelector(".browser_support");
+const content = document.querySelector("#content");
+
+function checkBrowserSupport() {
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        browserSupport.style.display = "flex";
+        content.style.display = "none";
+    }
+    else  // If another browser, return 0
+    {
+        browserSupport.style.display = "none";
+        content.style.display = "block";
+    }
+
+    return false;
+
+}
+
+checkBrowserSupport();
 
 if ('serviceWorker' in navigator) {
     // Use the window load event to keep the page load performant
-    window.addEventListener('load', () => {
+    window.addEventListener('load', function () {
         navigator.serviceWorker.register('/sw-base.js')
             .then(function () {
                 console.log('Service worker is registered');

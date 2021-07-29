@@ -1,20 +1,19 @@
 {
   "type": "mysql",
   "connection": {
-    "host": "sql6.freemysqlhosting.net",
-    "port": 3306,
-    "user": "sql6425394",
-    "password": "r3atelmsCz",
-    "database": "sql6425394"
+    "host": "remotemysql.com",
+    "user": "RVXDFNx7VU",
+    "password": "0F7alkCvHd",
+    "database": "RVXDFNx7VU"
   },
   "direct": true,
   "schema": {
     "tables": {
-      "subscription": {
+      "subscriptions": {
         "db": {
           "engine": "InnoDB",
-          "schema": "sql6425394",
-          "collation": "latin1_swedish_ci"
+          "schema": "RVXDFNx7VU",
+          "collation": "utf8_unicode_ci"
         },
         "columns": {
           "id": {
@@ -29,7 +28,7 @@
               "type": "string",
               "maxLength": 255,
               "primary": false,
-              "nullable": true
+              "nullable": false
             }
           },
           "authKey": {
@@ -37,7 +36,7 @@
               "type": "string",
               "maxLength": 255,
               "primary": false,
-              "nullable": true
+              "nullable": false
             }
           },
           "p256dh": {
@@ -45,7 +44,7 @@
               "type": "string",
               "maxLength": 255,
               "primary": false,
-              "nullable": true
+              "nullable": false
             }
           }
         }
@@ -53,8 +52,8 @@
       "comment": {
         "db": {
           "engine": "InnoDB",
-          "schema": "sql6425394",
-          "collation": "latin1_swedish_ci"
+          "schema": "RVXDFNx7VU",
+          "collation": "utf8_unicode_ci"
         },
         "columns": {
           "id": {
@@ -69,10 +68,26 @@
               "type": "string",
               "maxLength": 255,
               "primary": false,
-              "nullable": true
+              "nullable": false
             }
           },
           "message": {
+            "db": {
+              "type": "string",
+              "maxLength": 1000,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "datetime": {
+            "db": {
+              "type": "string",
+              "maxLength": 250,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "datetime_id": {
             "db": {
               "type": "string",
               "maxLength": 255,
@@ -81,22 +96,6 @@
             }
           },
           "image": {
-            "db": {
-              "type": "string",
-              "maxLength": 255,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "datetime": {
-            "db": {
-              "type": "string",
-              "maxLength": 255,
-              "primary": false,
-              "nullable": true
-            }
-          },
-          "datetime_id": {
             "db": {
               "type": "string",
               "maxLength": 255,

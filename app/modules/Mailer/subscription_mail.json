@@ -1,0 +1,11 @@
+{
+  "name": "subscription_mail",
+  "module": "mail",
+  "action": "setup",
+  "options": {
+    "host": "in-v3.mailjet.com",
+    "port": 587,
+    "username": "eb2e3e2d12850177e1123500fe95eef1",
+    "password": "39c58a2304c126cb5a0b964fe78eecbb"
+  }
+}

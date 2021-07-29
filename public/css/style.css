@@ -25,6 +25,24 @@ body {
     min-height: 100vh;
 }
 
+.browser_support{
+    height: calc(100vh - 30px);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.browser_support p{
+    font-size: 2rem;
+    color: rgb(0, 110, 255);
+}
+
 .card {
     display: -webkit-box;
     display: -ms-flexbox;
