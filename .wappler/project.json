@@ -45,5 +45,6 @@
   "routingHandler": "node",
   "projectServerModel": "node",
   "useRouting": true,
-  "npmInstall": true
+  "npmInstall": true,
+  "activeGitRemote": "wappler-dynamic-pwa"
 }
