@@ -57,5 +57,24 @@
       }
     ],
     "outputType": "object"
+  },
+  {
+    "name": "",
+    "module": "core",
+    "action": "condition",
+    "options": {
+      "if": "{{api.data.email}}",
+      "then": {
+        "steps": {
+          "name": "home",
+          "module": "core",
+          "action": "redirect",
+          "options": {
+            "url": "/"
+          }
+        }
+      }
+    },
+    "outputType": "boolean"
   }
 ]

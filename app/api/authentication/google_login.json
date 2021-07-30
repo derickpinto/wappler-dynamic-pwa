@@ -6,8 +6,7 @@
     "options": {
       "provider": "google",
       "scopes": [
-        "https://www.googleapis.com/auth/userinfo.profile",
-        "email"
+        "https://www.googleapis.com/auth/userinfo.email"
       ]
     },
     "output": true,
@@ -32,13 +31,47 @@
     "module": "api",
     "action": "send",
     "options": {
-      "url": " https://www.googleapis.com/plus/v1/people/me",
+      "url": "https://www.googleapis.com/oauth2/v2/userinfo",
       "auth": "oauth",
       "oauth": "google",
-      "params": {
-        "fields": "email"
+      "schema": []
+    },
+    "output": true,
+    "meta": [
+      {
+        "type": "object",
+        "name": "data",
+        "sub": [
+          {
+            "type": "text",
+            "name": "id"
+          },
+          {
+            "type": "text",
+            "name": "email"
+          }
+        ]
+      }
+    ],
+    "outputType": "object"
+  },
+  {
+    "name": "",
+    "module": "core",
+    "action": "condition",
+    "options": {
+      "if": "{{api.data.email}}",
+      "then": {
+        "steps": {
+          "name": "google_redirect",
+          "module": "core",
+          "action": "redirect",
+          "options": {
+            "url": "/"
+          }
+        }
       }
     },
-    "output": true
+    "outputType": "boolean"
   }
 ]

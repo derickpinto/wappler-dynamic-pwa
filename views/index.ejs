@@ -1,4 +1,5 @@
 <!-- Wappler include head-page="layouts/main" is="dmx-app" id="index" appConnect="local" jquery_slim_35="local" fontawesome_4="cdn" bootstrap4="local" components="{dmxBootstrap4Modal:{},dmxSummernote:{},dmxValidator:{},dmxFormatter:{},dmxStateManagement:{},dmxNotifications:{},dmxDatastore:{},dmxDataTraversal:{},dmxBootstrap4Toasts:{}}" jquery_slim_33="cdn" -->
+<dmx-serverconnect id="facebook_login" url="/api/authentication/fb_login" noload></dmx-serverconnect>
 
 <dmx-notifications id="notifies1"></dmx-notifications>
 <dmx-local-manager id="index_local"></dmx-local-manager>
@@ -54,7 +55,8 @@
 
 <section class="heading-section">
     <h1 class="heading-primary">PWA Comments</h1>
-    <button id="facebookLogin" class="btn btn-primary"><i class="fa fa-facebook"></i>&nbsp; Continue with facebook</button>
+    <a class="btn btn-primary" href="/api/authentication/fb_login"><i class="fa fa-facebook">&nbsp; Continue with facebook</i></a>
+    <a class="btn mt-4 btn-danger" href="/api/authentication/google_login" wappler-command="editContent" style="background-color: rgb(200, 35, 51); display: inline !important;"><i class="fa fa-google">&nbsp; Continue with google</i></a></a>
     <button id="btn1" class="add-btn btn text-light btn-primary" data-toggle="modal" data-target="#add_comment_modal">Add New Comment&nbsp;&nbsp;<i class="fa fa-plus-circle"></i>&nbsp;</button>
 </section>
 

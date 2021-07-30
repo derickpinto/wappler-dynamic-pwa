@@ -1,6 +1,14 @@
 {
   "routes": [
     {
+      "path": "/api/authentication/fb_login",
+      "url": ""
+    },
+    {
+      "path": "/api/authentication/google_login",
+      "url": ""
+    },
+    {
       "path": "/",
       "page": "index",
       "layout": "main"
