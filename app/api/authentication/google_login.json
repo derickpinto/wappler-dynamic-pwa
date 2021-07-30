@@ -1,0 +1,44 @@
+[
+  {
+    "name": "google_login",
+    "module": "oauth",
+    "action": "authorize",
+    "options": {
+      "provider": "google",
+      "scopes": [
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "email"
+      ]
+    },
+    "output": true,
+    "meta": [
+      {
+        "name": "refresh_token",
+        "type": "text"
+      },
+      {
+        "name": "access_token",
+        "type": "text"
+      },
+      {
+        "name": "expires_in",
+        "type": "number"
+      }
+    ],
+    "outputType": "object"
+  },
+  {
+    "name": "api",
+    "module": "api",
+    "action": "send",
+    "options": {
+      "url": " https://www.googleapis.com/plus/v1/people/me",
+      "auth": "oauth",
+      "oauth": "google",
+      "params": {
+        "fields": "email"
+      }
+    },
+    "output": true
+  }
+]

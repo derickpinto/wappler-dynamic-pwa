@@ -1,0 +1,19 @@
+{
+  "name": "google",
+  "module": "oauth",
+  "action": "provider",
+  "options": {
+    "service": "google",
+    "client_id": "927653456681-972vuk41i088cjs6o6d1pnb1h0lqf7rs.apps.googleusercontent.com",
+    "client_secret": "xvlQP1DG4Ah3QolgXiSUOZNF",
+    "tokenHandling": "self",
+    "verifySSL": false
+  },
+  "meta": [
+    {
+      "name": "access_token",
+      "type": "text"
+    }
+  ],
+  "outputType": "object"
+}

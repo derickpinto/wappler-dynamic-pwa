@@ -9,46 +9,6 @@
   "direct": true,
   "schema": {
     "tables": {
-      "subscriptions": {
-        "db": {
-          "engine": "InnoDB",
-          "schema": "RVXDFNx7VU",
-          "collation": "utf8_unicode_ci"
-        },
-        "columns": {
-          "id": {
-            "db": {
-              "type": "increments",
-              "primary": true,
-              "nullable": false
-            }
-          },
-          "endpoint": {
-            "db": {
-              "type": "string",
-              "maxLength": 255,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "authKey": {
-            "db": {
-              "type": "string",
-              "maxLength": 255,
-              "primary": false,
-              "nullable": false
-            }
-          },
-          "p256dh": {
-            "db": {
-              "type": "string",
-              "maxLength": 255,
-              "primary": false,
-              "nullable": false
-            }
-          }
-        }
-      },
       "comment": {
         "db": {
           "engine": "InnoDB",
@@ -101,6 +61,54 @@
               "maxLength": 255,
               "primary": false,
               "nullable": true
+            }
+          },
+          "file": {
+            "db": {
+              "type": "string",
+              "maxLength": 1000,
+              "primary": false,
+              "nullable": false
+            }
+          }
+        }
+      },
+      "subscriptions": {
+        "db": {
+          "engine": "InnoDB",
+          "schema": "RVXDFNx7VU",
+          "collation": "utf8_unicode_ci"
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "primary": true,
+              "nullable": false
+            }
+          },
+          "endpoint": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "authKey": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": false
+            }
+          },
+          "p256dh": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "nullable": false
             }
           }
         }

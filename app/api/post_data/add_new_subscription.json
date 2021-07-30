@@ -86,9 +86,9 @@
           "instance": "subscription_mail",
           "subject": "Thank you for subscribing to PWA Comments notification.",
           "fromName": "Derick Jeson Pinto",
-          "fromEmail": "derickpinto12@gmail.com",
+          "fromEmail": "derickpintotest@gmail.com",
           "toName": "Derick Jeson Pinto",
-          "toEmail": "derickpinto37@gmail.com",
+          "toEmail": "derickpinto12@gmail.com",
           "body": "Welcom to PWA comments"
         }
       }

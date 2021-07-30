@@ -1,0 +1,19 @@
+{
+  "name": "facebook",
+  "module": "oauth",
+  "action": "provider",
+  "options": {
+    "service": "facebook",
+    "client_id": "1507845839594769",
+    "client_secret": "2e1f13cfb5d7801f69d080c25da1337b",
+    "tokenHandling": "self",
+    "verifySSL": false
+  },
+  "meta": [
+    {
+      "name": "access_token",
+      "type": "text"
+    }
+  ],
+  "outputType": "object"
+}

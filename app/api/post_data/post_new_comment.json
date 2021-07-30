@@ -153,20 +153,11 @@
         "output": false
       },
       {
-        "name": "datetimeid",
-        "module": "core",
-        "action": "setvalue",
-        "options": {
-          "value": "{{$_POST.datetime1}}"
-        },
-        "output": true
-      },
-      {
         "name": "",
         "module": "core",
         "action": "condition",
         "options": {
-          "if": "{{datetimeid}}",
+          "if": "{{insert.affected}}",
           "then": {
             "steps": [
               {
@@ -179,35 +170,15 @@
                     "type": "SELECT",
                     "columns": [
                       {
-                        "table": "comment",
-                        "column": "id"
-                      },
-                      {
-                        "table": "comment",
-                        "column": "name"
-                      },
-                      {
-                        "table": "comment",
-                        "column": "message"
-                      },
-                      {
-                        "table": "comment",
-                        "column": "datetime"
-                      },
-                      {
-                        "table": "comment",
-                        "column": "datetime_id"
-                      },
-                      {
-                        "table": "comment",
-                        "column": "image"
+                        "table": "subscriptions",
+                        "column": "*"
                       }
                     ],
                     "table": {
-                      "name": "comment"
+                      "name": "subscriptions"
                     },
                     "joins": [],
-                    "query": "SELECT id, name, message, datetime, datetime_id, image\nFROM comment",
+                    "query": "SELECT *\nFROM subscriptions",
                     "params": []
                   }
                 },
@@ -217,23 +188,15 @@
                     "type": "text"
                   },
                   {
-                    "name": "name",
+                    "name": "endpoint",
                     "type": "text"
                   },
                   {
-                    "name": "message",
+                    "name": "authKey",
                     "type": "text"
                   },
                   {
-                    "name": "datetime",
-                    "type": "text"
-                  },
-                  {
-                    "name": "datetime_id",
-                    "type": "text"
-                  },
-                  {
-                    "name": "image",
+                    "name": "p256dh",
                     "type": "text"
                   }
                 ],
@@ -241,35 +204,24 @@
                 "output": true
               },
               {
-                "name": "",
-                "module": "core",
-                "action": "condition",
+                "name": "api",
+                "module": "api",
+                "action": "send",
                 "options": {
-                  "if": "{{fetch_all_subscribers.length}}",
-                  "then": {
-                    "steps": {
-                      "name": "api",
-                      "module": "api",
-                      "action": "send",
-                      "options": {
-                        "url": "https://pwa-notification-api.herokuapp.com/api/webpush",
-                        "method": "POST",
-                        "data": {
-                          "mail": "derickpinto12@gmail.com",
-                          "publicKey": "BM8twj8dS1TAZMFGU2OHcJ32UEO7XBQnKrbBO5jYLByToAyG_DgIOdc9jwBmz4orzSYzThNoy8m2JVQ-Q_QufS0",
-                          "privateKey": "fDES_2AX_-YbP8Qp7govFBkkFEFCVyeLPaky5Co8Ptc",
-                          "users": "{{fetch_all_subscribers}}"
-                        },
-                        "headers": {
-                          "Content-Type": "application/json"
-                        },
-                        "dataType": "json"
-                      },
-                      "output": false
-                    }
-                  }
+                  "url": "https://pwa-notification-api.herokuapp.com/api/webpush",
+                  "method": "POST",
+                  "data": {
+                    "mail": "derickpinto12@gmail.com",
+                    "publicKey": "BM8twj8dS1TAZMFGU2OHcJ32UEO7XBQnKrbBO5jYLByToAyG_DgIOdc9jwBmz4orzSYzThNoy8m2JVQ-Q_QufS0",
+                    "privateKey": "fDES_2AX_-YbP8Qp7govFBkkFEFCVyeLPaky5Co8Ptc",
+                    "users": "{{fetch_all_subscribers}}"
+                  },
+                  "headers": {
+                    "Content-Type": "application/json"
+                  },
+                  "dataType": "json"
                 },
-                "outputType": "boolean"
+                "output": false
               }
             ]
           }

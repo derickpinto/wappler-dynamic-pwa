@@ -1,0 +1,6 @@
+{
+  "name": "authentication",
+  "module": "auth",
+  "action": "provider",
+  "options": {}
+}

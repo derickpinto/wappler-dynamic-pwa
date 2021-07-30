@@ -1,0 +1,61 @@
+[
+  {
+    "name": "fb_auth",
+    "module": "oauth",
+    "action": "authorize",
+    "options": {
+      "provider": "oauth",
+      "scopes": [
+        "email"
+      ]
+    },
+    "output": true,
+    "meta": [
+      {
+        "name": "refresh_token",
+        "type": "text"
+      },
+      {
+        "name": "access_token",
+        "type": "text"
+      },
+      {
+        "name": "expires_in",
+        "type": "number"
+      }
+    ],
+    "outputType": "object"
+  },
+  {
+    "name": "api",
+    "module": "api",
+    "action": "send",
+    "options": {
+      "url": "https://graph.facebook.com/v6.0/me",
+      "params": {
+        "fields": "email"
+      },
+      "auth": "oauth",
+      "oauth": "oauth",
+      "schema": []
+    },
+    "output": true,
+    "meta": [
+      {
+        "type": "object",
+        "name": "data",
+        "sub": [
+          {
+            "type": "text",
+            "name": "email"
+          },
+          {
+            "type": "text",
+            "name": "id"
+          }
+        ]
+      }
+    ],
+    "outputType": "object"
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "name": "s3",
+  "module": "s3",
+  "action": "provider",
+  "options": {}
+}
